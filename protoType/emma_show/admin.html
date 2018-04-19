@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>管理层</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/manage.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/vue.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/segment.js"></script>
+    <style>
+        #xinxi {
+            display: block;
+        }
+
+        #bingli {
+            display: none;
+        }
+
+        .navMsgTheme {
+            /* padding-bottom: 0.75rem;
+            border-bottom: 0.225rem solid #409EFF; */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <nav class="panel panel-info">
+            <div class="container-fluid panel-heading">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                        aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">EMMA智能数字化医院信息管理系统</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="请输入寻找的关键词">
+                        </div>
+                        <button type="submit" class="btn btn-default">搜索</button>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#">清除缓存</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                黄贺医生
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">账户</a>
+                                </li>
+                                <li>
+                                    <a href="#">个人信息</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="#">设置</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </nav>
+        <div class="big_box">
+            <div class="big_left_box">
+                <div>
+                    <ul class="center">
+                        <li style="list-style-type:none;">
+                            <div class="themeMsg" @click="navMsgList(1)">
+                                <span :class="{'navMsgTheme':(navMsg==1)}">
+                                    <a>预览患者管理</a>
+                                </span>
+                            </div>
+                        </li>
+                        <li style="list-style-type:none;">
+                            <div class="themeMsg" @click="navMsgList(2)">
+                                <span :class="{'navMsgTheme':(navMsg==2)}">
+                                    <a>医生排班管理</a>
+                                </span>
+                            </div>
+                        </li>
+                        <li style="list-style-type:none;">
+                            <div class="themeMsg" @click="navMsgList(3)">
+                                <span :class="{'navMsgTheme':(navMsg==3)}">
+                                    <a>转诊管理</a>
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="big_right_box">
+                <div v-show="navMsg==1">
+                    1111
+                </div>
+                <div v-show="navMsg==2">
+                    22222
+                </div>
+                <div v-show="navMsg==3">
+                    33333
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            navMsg:1,
+
+        },
+        methods: {
+            navMsgList(m){
+                this.navMsg = m
+            }
+        }
+    })
+</script>
+
+</html>

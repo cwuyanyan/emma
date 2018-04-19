@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>检查</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/doctor.css">
+    <link rel="stylesheet" href="css/check.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/vue.js"></script>
+
+    <!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
+
+    <!-- <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
+    <!-- <script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.js"></script> -->
+    <script src="http://www.jq22.com/jquery/vue.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/segment.js"></script>
+    <style>
+        #xinxi {
+            display: block;
+           
+        }
+
+        #bingli {
+            display: none;
+           
+        }
+
+        .navTheme {
+            padding-bottom: 0.75rem;
+            border-bottom: 0.225rem solid #409EFF;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <nav class="panel panel-info">
+            <div class="container-fluid panel-heading">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                        aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">EMMA智能数字化医院信息管理系统</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="请输入寻找的关键词">
+                        </div>
+                        <button type="submit" class="btn btn-default">搜索</button>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#">清除缓存</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                黄贺医生
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">账户</a>
+                                </li>
+                                <li>
+                                    <a href="#">个人信息</a>
+                                </li>
+                                <li>
+                                    <a href="#">设置</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="#">退出</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </nav>
+
+        <div class="main">
+            <div class="left">
+                <ul class="center">
+                    <li style="list-style-type:none;">
+                        <div class="theme" @click="navList(1)">
+                            <span :class="{'navTheme':(navFault==1)}">
+                                <a>检查管理</a>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="right">
+                <div v-show="navFault==1">
+                    <div class="animated" id="xinxi">
+                        <input class="form-control" id="type" name="type" type="hidden" value="0" />
+                        <table class="big_table" align="center">
+                            <tr style="height: 30px;" align="center">
+                                <td class="col-md-1">姓名</td>
+                                <td class="col-md-2">
+                                    <input class="form-control" id="username" name="username" />
+                                </td>
+                                <td class="col-md-1">性别</td>
+                                <td class="col-md-2">
+                                    <input class="form-control" id="sex" name="sex" />
+                                </td>
+                                <td class="col-md-1">出生日期</td>
+                                <td class="col-md-2">
+                                    <input class="form-control" id="birthday" name="birthday" type="date" />
+                                </td>
+                                <td class="col-md-1">问诊</td>
+                                <td class="col-md-2">
+                                    <input type="button" class="btn btn-success" onclick="xinXi(event)" value="信息" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="animated" id="bingli">
+                        <input class="form-control" id="type" name="type" type="hidden" value="0" />
+                        <table class="big_table center">
+                            <tr style="height: 30px;">
+                                <td class="col-md-1">姓名</td>
+                                <td class="col-md-2">
+                                    <input class="form-control" id="username" name="username" />
+                                </td>
+                                <td class="col-md-1">性别</td>
+                                <td class="col-md-2">
+                                    <input class="form-control" id="sex" name="sex" />
+                                </td>
+                                <td class="col-md-2">出生日期</td>
+                                <td class="col-md-4">
+                                    <input class="form-control" id="birthday" name="birthday" type="date" />
+                                </td>
+                            </tr>
+                            <tr class="theme_two">
+                                <td class="col-md-1">年龄</td>
+                                <td class="col-md-2">
+                                    <input class="form-control" id="age" name="age" type="number" />
+                                </td>
+                                <td class="col-md-1">婚史</td>
+                                <td class="col-md-2">
+                                    <select class="selectform-control" name="marry">
+                                        <option value="0">未婚</option>
+                                        <option value="1">已婚</option>
+                                    </select>
+                                </td>
+
+                                <td class="col-md-2">入院日期</td>
+                                <td class="col-md-4" id="in_time"></td>
+                            </tr>
+                            <tr class="center">
+                                <td class="col-md-1">过敏史</td>
+                                <td class="col-md-2">
+                                    <input class="form-control" id="history" name="history" />
+                                </td>
+                                <td class="col-md-1">病史陈述者</td>
+                                <td class="col-md-2">
+                                    <input class="form-control" id="speak" name="speak" />
+                                </td>
+
+                                <td class="col-md-2">记录日期</td>
+                                <td class="col-md-4" id="log_time"></td>
+                            </tr>
+
+                            <tr style="height: 300px;">
+
+                                <td>主诉</td>
+                                <td colspan="3" id="log">
+                                    <textarea rows="6" cols="30" placeholder="" style="resize:none;" class="form-control" id="user_input"></textarea>
+                                </td>
+                                <td>提示</td>
+                                <td colspan="3" id="log">
+                                    <div class="send_result">
+                                        <a type="button" id="down_button">
+                                            
+                                            <input type="button" class="btn btn-success" id="creat" onclick="sendPost(event)" value="提交" />
+                                        </a>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr style=" height: 200px;">
+                                <td>诊断</td>
+                                <td colspan="3" id="check"></td>
+                                <td>医嘱</td>
+                                <td colspan="3" id="suggest"></td>
+                            </tr>
+                            <tr style=" height: 200px;" align="left">
+                                <td>上传文件</td>
+                                <td colspan="7">
+                                    <!-- <input type="file"> -->
+                                    <div class="hello">
+                                        <div class="upload">
+                                            <div class="upload_warp">
+                                                <div class="upload_warp_left" @click="fileClick">
+                                                    <img src="image/upload.png">
+                                                    <p class="col9">点击添加</p>
+                                                </div>
+                                                <div class="upload_warp_right" @drop="drop($event)" @dragenter="dragenter($event)" @dragover="dragover($event)">
+                                                    或者将单文件拖到此处
+                                                </div>
+                                            </div>
+                                            <div class="upload_warp_text">
+                                                选中{{imgList.length}}张文件，共{{bytesToSize(this.size)}}
+                                            </div>
+                                            <input @change="fileChange($event)" type="file" id="upload_file" multiple style="display: none" />
+                                            <div class="upload_warp_img" v-show="imgList.length!=0">
+                                                <div class="upload_warp_img_div" v-for="(item,index) of imgList">
+                                                    <div class="upload_warp_img_div_top">
+                                                        <div class="upload_warp_img_div_text">
+                                                            {{item.file.name}}
+                                                        </div>
+                                                        <img src="image/del.png" class="upload_warp_img_div_del" @click="fileDel(index)">
+                                                    </div>
+                                                    <img :src="item.file.src">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="sendMsg" style="height: 200px;" align="left">
+                                <td>发送至</td>
+                                <td colspan="7">
+                                    <div class="col-md-1"> 科室：</div>
+                                    <div class="col-md-2">
+                                        <select class="selectform-control" name="marry">
+                                            <option value="0">外科</option>
+                                            <option value="1">内科</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-1"> 医生：</div>
+                                    <div class="col-md-2">
+                                        <select class="selectform-control" name="marry">
+                                            <option value="0">李医生</option>
+                                            <option value="1">黄医生</option>
+                                        </select>
+                                    </div>
+                                    <div class="">
+                                        <input type="button" class="btn btn-success sendBtn" value="发送" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                navFault: 1, //导航点击切换
+                fault: 1, //切换
+                headFault: 1, //切换
+                // upload
+                imgList: [],
+                size: 0,
+            },
+
+            methods: {
+                handleChange(val) {
+                    console.log(val);
+                },
+
+                navList(i) {
+                    this.navFault = i
+                },
+                fileClick() {
+                    document.getElementById('upload_file').click()
+                },
+                fileChange(el) {
+                    if (!el.target.files[0].size) return;
+                    this.fileList(el.target);
+                    el.target.value = ''
+                },
+                fileList(fileList) {
+                    let files = fileList.files;
+                    for (let i = 0; i < files.length; i++) {
+                        //判断是否为文件夹
+                        if (files[i].type != '') {
+                            this.fileAdd(files[i]);
+                        } else {
+                            //文件夹处理
+                            this.folders(fileList.items[i]);
+                        }
+                    }
+                },
+                //文件夹处理
+                folders(files) {
+                    let _this = this;
+                    //判断是否为原生file
+                    if (files.kind) {
+                        files = files.webkitGetAsEntry();
+                    }
+                    files.createReader().readEntries(function (file) {
+                        for (let i = 0; i < file.length; i++) {
+                            if (file[i].isFile) {
+                                _this.foldersAdd(file[i]);
+                            } else {
+                                _this.folders(file[i]);
+                            }
+                        }
+                    })
+                },
+                foldersAdd(entry) {
+                    let _this = this;
+                    entry.file(function (file) {
+                        _this.fileAdd(file)
+                    })
+                },
+                fileAdd(file) {
+                    //总大小
+                    this.size = this.size + file.size;
+                    //判断是否为图片文件
+                    if (file.type.indexOf('image') == -1) {
+                        file.src = 'image/wenjian.png';
+                        this.imgList.push({
+                            file
+                        });
+                    } else {
+                        let reader = new FileReader();
+                        reader.vue = this;
+                        reader.readAsDataURL(file);
+                        reader.onload = function () {
+                            file.src = this.result;
+                            this.vue.imgList.push({
+                                file
+                            });
+                        }
+                    }
+                },
+                fileDel(index) {
+                    this.size = this.size - this.imgList[index].file.size; //总大小
+                    this.imgList.splice(index, 1);
+                },
+                bytesToSize(bytes) {
+                    if (bytes === 0) return '0 B';
+                    let k = 1000, // or 1024
+                        sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+                        i = Math.floor(Math.log(bytes) / Math.log(k));
+                    return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
+                },
+                dragenter(el) {
+                    el.stopPropagation();
+                    el.preventDefault();
+                },
+                dragover(el) {
+                    el.stopPropagation();
+                    el.preventDefault();
+                },
+                drop(el) {
+                    el.stopPropagation();
+                    el.preventDefault();
+                    this.fileList(el.dataTransfer);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

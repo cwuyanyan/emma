@@ -1,0 +1,209 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Destroydrop &raquo; Javascripts &raquo; Tree</title>
+    <link rel="StyleSheet" href="test.json" type="text/css" />
+    <link rel="StyleSheet" href="dtree/dtree.css" type="text/css" />
+    <script type="text/javascript" src="dtree/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="dtree/dtree.js"></script>
+    <script type="text/javascript">
+        tree = null;
+        tree = new dTree('tree');
+
+        //("当前节点的ID","父节点的ID,","节点显示的文字","节点的Url","鼠标移至该节点时节点的Title","节点的target ","",true);
+        tree.add("0", "-1", "医院中心", "", "", "", "", "./img/base.gif", false);
+        //第一次调用
+        $.ajax({
+            type: "get", //使用get方法访问后台
+            async: false, //同步，等这个请求完成后才继续往下执行,这样myTree才能使用返回来的数据  
+            dataType: "json", //返回json格式的数据
+            url: "http://192.168.0.113:8080/user/getparentnotes", //要访问的后台地址
+            data: {
+                pid: 0
+            }, //要发送的数据
+            success: function (itemlist) { //msg为返回的数据，在这里做数据绑定
+                var dataObj = eval(itemlist.list);
+                for (var i = 0; i < dataObj.length; i++) {
+                    var obj = dataObj[i];
+
+                    var des = obj.checkChannelDescription;
+                    // alert(obj.id+":"+obj.checkChannelName)
+                    if (obj.checkChannelType == "0") {
+                        tree.add(obj.id, obj.checkChannelPID, obj.checkChannelName, "javascript:void(0)",
+                            "", "", "", "./img/folder.gif", "./img/folder.gif", false);
+                    } else {
+                        tree.add(obj.id, obj.checkChannelPID, obj.checkChannelName, "填写url", "", "", "",
+                            "./img/page.gif", "./img/page.gif", false);
+                    }
+                }
+                /////////////////////////////////////////////////////////
+                tree.s = function (nodeId) { //添加节点点击事件   
+                    /* alert(this.aNodes[nodeId].id);//点击节点名称（该节点的其它数据也都在这里，如下图所示）  
+         	alert(this.aNodes[nodeId].pid);//点击节点名称（该节点的其它数据也都在这里，如下图所示）  
+         	alert(this.aNodes[nodeId].name);  */
+                    onClickJson(this.aNodes[nodeId].id)
+                }
+                tree.updateCookie();
+                /*  alert("开始写入了"); */
+                document.write(tree);
+                document.close()
+            }
+        });
+
+        tree.config.useCookies = false;
+        tree.config.inOrder = true;
+        /* tree.s=function(nodeId){ //添加节点点击事件   
+        	
+        	onClickJson(this.aNodes[nodeId].id)
+        	
+        }  */
+
+        //document.write(tree.closeAll());
+
+        function onClickJson(value) {
+            /* alert("当前节点"+value+"============="); */
+            $.ajax({
+                type: "post", //使用get方法访问后台
+                dataType: "json", //返回json格式的数据
+                async: false, //同步，等这个请求完成后才继续往下执行,这样myTree才能使用返回来的数据  
+                url: "http://192.168.0.113:8080/user/getparentnotes", //要访问的后台地址
+                data: {
+                    pid: value
+                }, //要发送的数据
+                success: function (itemlist) {
+                    /* alert("到返回数据了！！！！！！！！"); */
+                    var dataObj = eval(itemlist.list);
+
+                    for (var i = 0; i < dataObj.length; i++) {
+                        var obj = dataObj[i];
+                        var des = obj.checkChannelDescription;
+                        // alert(obj.id+":"+obj.checkChannelName)
+                        if (obj.checkChannelType == "0") {
+                            tree.add(obj.id, obj.checkChannelPID, obj.checkChannelName, "javascript:", "",
+                                "", "", "./img/folder.gif", "./img/folder.gif", true);
+                        } else {
+                            tree.add(obj.id, obj.checkChannelPID, obj.checkChannelName, "填写url", "", "", "",
+                                "./img/page.gif", "./img/page.gif", true);
+                        }
+                    }
+                    /////////////////////////////////////////////////////////
+                    tree.s = function (nodeId) { //添加节点点击事件   
+
+                        /* alert(this.aNodes[nodeId].id); */ //点击节点名称（该节点的其它数据也都在这里，如下图所示）  
+                        /* alert(this.aNodes[nodeId].pid);//点击节点名称（该节点的其它数据也都在这里，如下图所示）  
+                        alert(this.aNodes[nodeId].name); */
+                        onClickJson(this.aNodes[nodeId].id)
+
+                    }
+                    tree.updateCookie();
+                    document.open();
+                    document.write(tree);
+                    document.close();
+                }
+            });
+        }
+
+
+
+
+
+
+
+
+
+        /*    $.ajax({
+              type: "get",//使用get方法访问后台
+              dataType: "json",//返回json格式的数据
+              url: "test.json",//要访问的后台地址
+              data: "",//要发送的数据
+              async: true,　
+              success: function(dataList){//msg为返回的数据，在这里做数据绑定
+               
+                alert("hahha")
+                sparseJson(menulist);
+              });    */
+
+
+
+        /*   
+          function parseJson(jsonObj) {
+              if( typeof(jsonObj) == "undefined" ){
+                  alert('JSON对象不能为空！');
+              }
+              //遍历第一层数据
+              for (var topKey in jsonObj) {
+                  //如果对象类型为object类型且数组长度大于0，递归继续解析
+                  if (jsonObj[topKey].length > 0 && typeof(jsonObj[topKey]) == "object") {
+                      parseJson(jsonObj[topKey]);
+                  } else {
+                          //如果对象类型为object类型，依次循环取出所有元素
+                          if (typeof(jsonObj[topKey]) == "object") {
+                              for(var childKey in jsonObj[topKey]) {
+                                  //如果对象类型为object类型，递归继续解析
+                                  if (typeof(jsonObj[topKey][childKey]) == "object") {
+                                  parseJson(jsonObj[topKey][childKey]);
+                              } else {
+                                      //如果对象类型为object类型，直接取元素名称和值
+                                      $("#menu").append("<li>" + childKey + ":" + jsonObj[topKey][childKey] + "</li>");
+                              }
+                              }
+                          } else{
+                                  //如果对象类型为object类型，直接取元素名称和值
+                                  $("#menu").append("<li>" + childKey + ":" + jsonObj[topKey][childKey] + "</li>");
+                          }
+                  }
+             }
+          }  */
+    </script>
+
+</head>
+
+<body>
+
+
+    <h2>Example</h2>
+
+    <div class="dtree">
+
+        <p>
+            <a href="javascript: d.openAll();">open all</a> |
+            <a href="javascript: d.closeAll();">close all</a>
+        </p>
+
+        <script type="text/javascript">
+            <!--
+
+            d = new dTree('d');
+
+            d.add(0, -1, 'My example tree');
+            d.add(1, 0, 'Node 1', 'example01.html');
+            d.add(2, 0, 'Node 2', 'example01.html'); 
+            d.add(3, 1, 'Node 1.1', 'example01.html');
+            d.add(4, 0, 'Node 3', 'example01.html');
+            d.add(5, 3, 'Node 1.1.1', 'example01.html');
+            d.add(6, 5, 'Node 1.1.1.1', 'example01.html');
+            d.add(7, 0, 'Node 4', 'example01.html');
+            d.add(8, 1, 'Node 1.2', 'example01.html');
+            d.add(9, 0, 'My Pictures', 'example01.html', 'Pictures I\'ve taken over the years', '', '',
+                'img/imgfolder.gif');
+            d.add(10, 9, 'The trip to Iceland', 'example01.html', 'Pictures of Gullfoss and Geysir');
+            d.add(11, 9, 'Mom\'s birthday', 'example01.html');
+            d.add(12, 0, 'Recycle Bin', 'example01.html', '', '', 'img/trash.gif');
+
+            document.write(d);
+
+            //-->
+        </script>
+
+    </div>
+    <br>
+    <div>
+        <ul id="menu"></ul>
+    </div>
+    <br>
+
+</body>
+
+</html>

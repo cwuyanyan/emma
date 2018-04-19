@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+
+<head>
+	<title>Destroydrop &raquo; Javascripts &raquo; Tree</title>
+
+	<link rel="StyleSheet" href="dtree.css" type="text/css" />
+	<script type="text/javascript" src="dtree.js"></script>
+        <script type="text/javascript">
+            $.ajax({
+            type: "get",//使用get方法访问后台
+            dataType: "json",//返回json格式的数据
+            url: "${ctx}/user/UserAction.do",//要访问的后台地址
+            data: "method=get_myitem&actor.aid=${userforms.actor.aid}",//要发送的数据
+            success: function(itemlist){//msg为返回的数据，在这里做数据绑定
+              
+             d = new dTree('d');
+             d.add(0,-1,'首页','javascript:void(0);');
+              
+             for(var i=0;i<itemlist.length;i++)
+             {
+                 var item = itemlist[i];
+                 if(item.root==0)
+                 {
+                     d.add(item.iid,item.root,item.name,item.url);
+                     for(var j=0;j<itemlist.length;j++)
+                     {
+                         var item1 = itemlist[j];
+                         if(item1.root==item.iid)
+                         {
+                             d.add(item1.iid,item1.root,item1.name,item1.url);
+                         }
+                     }
+                 }
+             }
+             d.add(100,0,'系统帮助','javascript:void(0);');
+                 d.add(101,100,'使用手册','#');
+                 d.add(102,100,'规章制度','#');
+                 //$("#dtree").html(d);
+                 document.getElementById("dtree").innerHTML=d;
+            }
+       });
+                
+        </script>
+
+</head>
+
+<body>
+
+
+<h2>Example</h2>
+
+<div class="dtree">
+
+	<p><a href="javascript: d.openAll();">open all</a> | <a href="javascript: d.closeAll();">close all</a></p>
+
+	<script type="text/javascript">
+		<!--
+
+		d = new dTree('d');
+
+		d.add(0,-1,'My example tree');
+		d.add(1,0,'Node 1','example01.html');
+		d.add(2,0,'Node 2','example01.html');
+		d.add(3,1,'Node 1.1','example01.html');
+		d.add(4,0,'Node 3','example01.html');
+		d.add(5,3,'Node 1.1.1','example01.html');
+		d.add(6,5,'Node 1.1.1.1','example01.html');
+		d.add(7,0,'Node 4','example01.html');
+		d.add(8,1,'Node 1.2','example01.html');
+		d.add(9,0,'My Pictures','example01.html','Pictures I\'ve taken over the years','','','img/imgfolder.gif');
+		d.add(10,9,'The trip to Iceland','example01.html','Pictures of Gullfoss and Geysir');
+		d.add(11,9,'Mom\'s birthday','example01.html');
+		d.add(12,0,'Recycle Bin','example01.html','','','img/trash.gif');
+
+		document.write(d);
+
+		//-->
+	</script>
+
+</div>
+
+
+</body>
+
+</html>

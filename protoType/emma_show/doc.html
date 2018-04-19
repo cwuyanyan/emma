@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>医生</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/doctor.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/vue.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/segment.js"></script>
+    <style>
+        #xinxi {
+            display: block;
+        }
+
+        #bingli {
+            display: none;
+        }
+
+        .navTheme {
+            padding-bottom: 0.75rem;
+            border-bottom: 0.225rem solid #409EFF;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <nav class="panel panel-info">
+            <div class="container-fluid panel-heading">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                        aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">EMMA智能数字化医院信息管理系统</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <!-- <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="#">Link
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">Link</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">Action</a>
+                                </li>
+                                <li>
+                                    <a href="#">Another action</a>
+                                </li>
+                                <li>
+                                    <a href="#">Something else here</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="#">Separated link</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="#">One more separated link</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul> -->
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="请输入寻找的关键词">
+                        </div>
+                        <button type="submit" class="btn btn-default">搜索</button>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#">清除缓存</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                黄贺医生
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">账户</a>
+                                </li>
+                                <li>
+                                    <a href="#">个人信息</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="#">设置</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+        <div class="main">
+            <div class="left">
+                <ul class="center">
+                    <li style="list-style-type:none;">
+                        <div class="theme" @click="navList(1)">
+                            <span :class="{'navTheme':(navFault==1)}">
+                                <a>预览患者管理</a>
+                            </span>
+                        </div>
+                    </li>
+                    <li style="list-style-type:none;">
+                        <div class="theme" @click="navList(2)">
+                            <span :class="{'navTheme':(navFault==2)}">
+                                <a>医生排班管理</a>
+                            </span>
+                        </div>
+                    </li>
+                   
+                </ul>
+            </div>
+            <div class="right">
+                <div v-show="navFault==1">
+                    <div class="bing animated" id="xinxi">
+                        <span class="bold preAll">当前位置：预览患者-概览</span>
+                        <table class="big_table" align="center">
+                            <tr style="height: 30px;" align="center">
+                                <td class="col6">id</td>
+                                <td class="col-md-1 ">
+                                    <input class="form-control" placeholder="0001" id="id" name="id" />
+                                </td>
+                                <td class="col-md-1">
+                                    <span class="col6">姓名</span>
+                                </td>
+                                <td>
+                                    <input class="form-control" placeholder="李华" id="username" name="username" />
+                                </td>
+                                <td class="col-md-1">
+                                    <span class="col6">性别</span>
+                                </td>
+                                <td>
+                                    <input class="form-control" placeholder="女" id="sex" name="sex" />
+                                </td>
+                                <td class="col-md-1">
+                                    <span class="col6">年龄</span>
+                                </td>
+                                <td>
+                                    <input class="form-control" placeholder="33" id="age" name="age" />
+                                </td>
+                                <td class="col-md-1">
+                                    <span class="col6">状态</span>
+                                </td>
+                                <td>
+                                    <select class="selectform-control" name="status">
+                                        <option value="0">未就诊</option>
+                                        <option value="1">已就诊</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">问诊</td>
+                                <td class="">
+                                    <a href="javascript:void(0)" onclick="wanShan(event)" class="btn btn-info">信息</a>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;" align="center">
+                                <td class="col6">id</td>
+                                <td class="col-md-1">
+                                    <input class="form-control" placeholder="0002" id="id" name="id" />
+                                </td>
+                                <td class="col-md-1">
+                                    <span class="col6">姓名</span>
+                                </td>
+                                <td>
+                                    <input class="form-control" placeholder="张恒" id="username" name="username" />
+                                </td>
+                                <td class="col-md-1">
+                                    <span class="col6">性别</span>
+                                </td>
+                                <td>
+                                    <input class="form-control" placeholder="男" id="sex" name="sex" />
+                                </td>
+                                <td class=" col-md-1">
+                                    <span class="col6">年龄</span>
+                                </td>
+                                <td>
+                                    <input class="form-control" placeholder="53" id="age" name="age" />
+                                </td>
+                                <td class="col-md-1">
+                                    <span class="col6">状态</span>
+                                </td>
+                                <td>
+                                    <select class="selectform-control" name="status">
+                                        <option value="0">未就诊</option>
+                                        <option value="1">已就诊</option>
+                                    </select>
+                                </td>
+                                <td class="col-md-1">问诊</td>
+                                <td class="">
+                                    <a href="javascript:void(0)" onclick="wanShan(event)" class="btn btn-info">信息</a>
+                                </td>
+                            </tr>
+                           
+                        </table>
+                    </div>
+                    <div id="bingli" class="animated">
+                        <div class="myImg" style="position:relative;">
+                            <div class="biaoti">
+                                <span class="bold preTit" @click="headerList(1)">
+                                    <span :class="{'hdTheme':(headFault==1)}">
+                                        门诊病例
+                                    </span>
+                                </span>
+                                <span class="bold preTit" @click="headerList(2)">
+                                    <span :class="{'hdTheme':(headFault==2)}">
+                                        履历
+                                    </span>
+                                </span>
+                                <span class="bold preTit" @click="headerList(3)">
+                                    <span :class="{'hdTheme':(headFault==3)}">
+                                        住院医嘱
+                                    </span>
+                                </span>
+                                <span class="bold preTit" @click="headerList(4)">
+                                    <span :class="{'hdTheme':(headFault==4)}">
+                                        住院病例
+                                    </span>
+                                </span>
+                            </div>
+
+                            <div v-show="headFault==1">
+                                <input class="form-control" id="type" name="type" type="hidden" value="0" />
+
+                                <table class="big_table depart" align="center">
+                                    <tr style="height: 30px;" align="center">
+                                        <td class="col-md-1">姓名</td>
+                                        <td class="col-md-2">
+                                            <input class="form-control" placeholder="李华" id="username" name="username" />
+                                        </td>
+                                        <td class="col-md-1">性别</td>
+                                        <td class="col-md-2">
+                                            <input class="form-control" placeholder="女" id="sex" name="sex" />
+                                        </td>
+                                        <td class="col-md-2">身份证号</td>
+                                        <td class="col-md-4">41270219856031618</td>
+                                    </tr>
+
+                                    <tr class="center">
+                                        <td class="col-md-1">年龄</td>
+                                        <td class="col-md-2">
+                                            <input class="form-control" placeholder="33" id="age" name="age" type="number" />
+                                        </td>
+                                        <td class="col-md-1">手机号</td>
+                                        <td class="col-md-2">
+                                            <input class="form-control" placeholder="13042589652" id="speak" name="speak" />
+                                        </td>
+                                        <td class="col-md-2">入院日期</td>
+                                        <td class="col-md-4" id="in_time"></td>
+                                    </tr>
+                                    <tr class="center">
+                                        <td class="col-md-1">联系人(姓名)</td>
+                                        <td class="col-md-2">
+                                            <input class="form-control" placeholder="李晓华" id="speak" name="speak" />
+                                        </td>
+                                        <td class="col-md-1">联系人(电话)</td>
+                                        <td class="col-md-2">
+                                            <input class="form-control" placeholder="13056994658" id="speak" name="speak" />
+                                        </td>
+                                        <td class="col-md-2">记录日期</td>
+                                        <td class="col-md-4" id="log_time"></td>
+                                    </tr>
+                                    <tr style=" height: 150px;" align="left">
+                                        <td>预诊记录</td>
+                                        <td colspan="7" id="check">无</td>
+                                    </tr>
+                                    <tr style="height: 150px;" align="left">
+                                        <td>主诉</td>
+                                        <td colspan="7" id="log">
+                                            <!-- <textarea rows="3" cols="20" style="resize:none;" class="form-control" id="user_input"> -->
+                                            头晕恶心1小时。
+                                            <!-- </textarea> -->
+                                        </td>
+                                    </tr>
+                                    <tr style=" height: 150px;" align="left">
+                                        <td>现病史</td>
+                                        <td colspan="7" id="check">
+                                            1小时前，无明显诱因出现头晕，头晕多于扭头时发生，伴耳鸣。1小时来，感头晕明显加重，伴视物旋转，频繁恶心，不伴有意识障碍及大小便失禁，不伴有肢体运动障碍及抽搐，无呕吐。未予以重视，在当地未行治疗。今急来诊，以“头晕原因待查”急诊入院。发病来，精神可，睡眠饮食可，大小便正常。
+                                        </td>
+                                    </tr>
+                                    <tr style=" height: 150px;" align="left">
+                                        <td>既往史</td>
+                                        <td colspan="7" id="check">“高血压病”、“冠心病心梗支架术后”“糖尿病”。</td>
+                                    </tr>
+                                    <tr style=" height: 150px;" align="left">
+                                        <td>诊断</td>
+                                        <td colspan="7" id="check">
+                                            <p>1.头晕待查</p>
+                                            <p> 2.高血压病3级（极高危组）</p>
+                                            <p>3.冠状动脉粥样硬化性心脏病陈旧性心肌梗死冠状动脉支架植入后状态缺血性心肌病心功能Ⅱ级</p>
+                                            <p> 4.2型糖尿病。</p>
+
+
+
+                                        </td>
+                                    </tr>
+                                    <tr style=" height: 200px;" align="left">
+                                        <td>医嘱</td>
+                                        <td colspan="7" id="suggest">
+                                            <div>检查：
+                                                <p>1.指测血糖：12.3mmol/L。</p>
+                                                <p>2.心电图提示：窦性心律V1、V2、V3导异常Q波，部分导联呈ST-T改变。</p>
+                                                <p></p>
+                                                <p></p>
+                                            </div>
+                                            <br/>
+                                            <br/>
+                                            <div>用药：</div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+                            </div>
+                            <div v-show="headFault==2">
+                                <input class="form-control" id="type" name="type" type="hidden" value="0" />
+                                <table class="big_table depart" align="center">
+                                    <tr style="height: 30px;" align="center">
+                                        <td class="col-md-1">姓名</td>
+                                        <td class="col-md-2">
+                                            <input class="form-control" placeholder="李华" id="username" name="username" />
+                                        </td>
+                                        <td class="col-md-1">性别</td>
+                                        <td class="col-md-2">
+                                            <input class="form-control" placeholder="女" id="sex" name="sex" />
+                                        </td>
+                                        <td class="col-md-2">身份证号</td>
+                                        <td class="col-md-4">41270219856031618</td>
+                                    </tr>
+
+                                    <tr class="center">
+                                        <td class="col-md-1">年龄</td>
+                                        <td class="col-md-2">
+                                            <input class="form-control" placeholder="33" id="age" name="age" type="number" />
+                                        </td>
+                                        <td class="col-md-1">手机号</td>
+                                        <td class="col-md-2">
+                                            <input class="form-control" placeholder="13042589652" id="speak" name="speak" />
+                                        </td>
+                                        <td class="col-md-2">入院日期</td>
+                                        <td class="col-md-4" id="in_time"></td>
+                                    </tr>
+                                    <tr class="center">
+                                        <td class="col-md-1">联系人(姓名)</td>
+                                        <td class="col-md-2">
+                                            <input class="form-control" placeholder="李晓华" id="speak" name="speak" />
+                                        </td>
+                                        <td class="col-md-1">联系人(电话)</td>
+                                        <td class="col-md-2">
+                                            <input class="form-control" placeholder="13056994658" id="speak" name="speak" />
+                                        </td>
+                                        <td class="col-md-2">记录日期</td>
+                                        <td class="col-md-4" id="log_time"></td>
+                                    </tr>
+                                    <tr style=" height: 150px;" align="left">
+                                        <td>预诊记录</td>
+                                        <td colspan="7" id="check">无</td>
+                                    </tr>
+                                    <tr style="height: 150px;" align="left">
+                                        <td>主诉</td>
+                                        <td colspan="7" id="log">
+                                            <!-- <textarea rows="3" cols="20" style="resize:none;" class="form-control" id="user_input"> -->
+                                            头晕恶心1小时。
+                                            <!-- </textarea> -->
+                                        </td>
+                                    </tr>
+                                    <tr style=" height: 150px;" align="left">
+                                        <td>现病史</td>
+                                        <td colspan="7" id="check">
+                                            1小时前，无明显诱因出现头晕，头晕多于扭头时发生，伴耳鸣。1小时来，感头晕明显加重，伴视物旋转，频繁恶心，不伴有意识障碍及大小便失禁，不伴有肢体运动障碍及抽搐，无呕吐。未予以重视，在当地未行治疗。今急来诊，以“头晕原因待查”急诊入院。发病来，精神可，睡眠饮食可，大小便正常。
+                                        </td>
+                                    </tr>
+                                    <tr style=" height: 150px;" align="left">
+                                        <td>既往史</td>
+                                        <td colspan="7" id="check">“高血压病”、“冠心病心梗支架术后”“糖尿病”。</td>
+                                    </tr>
+                                    <tr style=" height: 150px;" align="left">
+                                        <td>诊断</td>
+                                        <td colspan="7" id="check">
+                                            <p>1.头晕待查</p>
+                                            <p> 2.高血压病3级（极高危组）</p>
+                                            <p>3.冠状动脉粥样硬化性心脏病陈旧性心肌梗死冠状动脉支架植入后状态缺血性心肌病心功能Ⅱ级</p>
+                                            <p> 4.2型糖尿病。</p>
+                                        </td>
+                                    </tr>
+                                    <tr style=" height: 200px;" align="left">
+                                        <td>医嘱</td>
+                                        <td colspan="7" id="suggest">
+                                            <div>检查：
+                                                <p>1.指测血糖：12.3mmol/L。</p>
+                                                <p>2.心电图提示：窦性心律V1、V2、V3导异常Q波，部分导联呈ST-T改变。</p>
+                                                <p></p>
+                                                <p></p>
+                                            </div>
+                                            <br/>
+                                            <br/>
+                                            <div>用药：</div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                               
+                            </div>
+                            <div v-show="headFault==3">
+                                <input class="form-control" id="type" name="type" type="hidden" value="0" />
+                                <table class="big_table" align="center">
+                                    <tr style=" height: 200px;" align="left">
+                                        <span>李华-日常更新</span>
+                                        <td class="col-md-2" id="in_time">2018年4月11日</td>
+                                        <td class="col-md-10" id="suggest">
+                                            <div>
+                                                IS_SUB_ORDER,LONG_FLAG,ORDER_CONTENT,FREQUENCY_NAME,START_TIME,STOP_TIME
+                                                <br/> N,Y,内科常规护理,
+                                                <br/> N,Y,Ⅰ级护理,
+                                                <br/> N,Y,卧床休息,
+                                                <br/> N,Y,糖尿病膳食,
+                                                <br/> N,Y,病房取暖费Qd,Qd,
+                                                <br/> N,Y,糖尿病健康宣教,
+                                                <br/> N,Y,测血压Q8h,Q8h,
+                                                <br/> N,Y,病重,
+                                                <br/> N,Y,住院诊查费Qd,Qd,
+                                                <br/> N,Y,阿司匹林肠溶片(100mg) 100mg po QN ,QN,
+                                                <br/> N,Y,氯吡格雷片（进口）(75mg) 75mg po QN ,QN,
+                                                <br/> N,Y,倍他司汀片(4mg) 8mg po Tid ,Tid,
+                                                <br/> N,N,彩超:颈部血管,
+                                                <br/> N,N,淀粉酶,
+                                                <br/> N,N,心肌酶,
+                                                <br/> N,N,葡萄糖,
+                                                <br/> N,N,电解质,
+                                                <br/> N,N,血脂,
+                                                <br/> N,N,肾功,
+                                                <br/> N,N,肝功能,
+                                                <br/> N,N,胸部正位,
+                                                <br/> N,N,彩超肝,胆,脾,胰,肾,
+                                                <br/> N,N,彩超:心脏彩超多普勒+左心功能测定,
+                                                <br/> N,N,真空采血管 4个 ,
+                                                <br/> N,N,静脉采血 1次 ,
+                                                <br/> N,N,快速血浆反应素试验RPR,
+                                                <br/> N,N,梅毒螺旋体特异抗体测定,
+                                                <br/> N,N,人类免疫缺陷病毒联合试验,
+                                                <br/> N,N,丙型肝炎抗体测定,
+                                                <br/> N,N,乙型肝炎五项,
+                                                <br/> N,N,凝血四项,
+                                                <br/> N,N,血浆D-二聚体(D-Dimer),
+                                                <br/> N,N,粪便OB试验,
+                                                <br/> N,N,粪便常规,
+                                                <br/> N,N,血细胞分析,
+                                                <br/> N,N,尿常规自动分析,
+                                                <br/> Y,N,注射用前列地尔干乳剂(5ug) 10ug,St,
+                                                <br/> N,N,氯化钠注射液(250ml) 250ml ivgtt St ,St,
+                                                <br/> N,N,氯化钠注射液(250ml) 250ml ivgtt St ,St,
+                                                <br/> Y,N,醒脑静针(2ml) 20ml,St,
+                                                <br/> N,N,氯化钠注射液(250ml) 250ml ivgtt St ,St,
+                                                <br/> Y,N,红花黄色素针 150mg,St,
+                                                <br/> N,Y,指测毛细血糖（3餐前30分钟及3餐后2小时）,
+                                                <br/> Y,Y,注射用前列地尔干乳剂(5ug) 10ug,Qd,
+                                                <br/> N,Y,氯化钠注射液(250ml) 250ml ivgtt Qd ,Qd,
+                                                <br/> Y,Y,红花黄色素针 150mg,Qd,
+                                                <br/> N,Y,氯化钠注射液(250ml) 250ml ivgtt Qd ,Qd,
+                                                <br/> N,Y,低分子肝素钙针(5000u) 5000u iH Q12h ,Q12h,
+                                                <br/> N,N,低分子肝素钙针(5000u) 5000u iH St ,St,
+                                                <br/> N,N,低分子肝素钙针(5000u) 5000u iH St ,St,
+                                                <br/> Y,N,注射用前列地尔干乳剂(5ug) 10ug,St,
+                                                <br/> N,N,氯化钠注射液(250ml) 250ml ivgtt St ,St,
+                                                <br/> Y,N,红花黄色素针 150mg,St,
+                                                <br/> N,N,氯化钠注射液(250ml) 250ml ivgtt St ,St,
+                                                <br/> N,Y,吡拉西坦氯化钠针100ml 100ml ivgtt Qd ,Qd,
+                                                <br/> N,N,吡拉西坦氯化钠针100ml 100ml ivgtt St ,St,
+                                                <br/> N,Y,瑞舒伐他汀钙片(10mg) 10mg po QN ,QN,
+                                                <br/> N,Y,二甲双胍片（0.5g） 0.5g po Bid ,Bid,
+                                                <br/> N,Y,阿卡波糖片(进口)(50mg) 50mg po Tid ,Tid,
+                                                <br/> N,Y,厄贝沙坦片(75mg) 150mg po Qd ,Qd,
+                                                <br/> N,N,床旁心电图加收,
+                                                <br/> N,N,常规15导联心电图,
+                                                <br/> N,N,彩超肝,胆,脾,胰,肾,
+                                                <br/> N,N,彩超:颈部血管,
+                                                <br/> N,N,彩超:心脏彩超多普勒+左心功能测定,
+                                                <br/> N,N,彩超肝,胆,脾,胰,肾,
+                                                <br/> N,N,彩超:心脏彩超多普勒+左心功能测定,
+                                                <br/> N,N,彩超:颈部血管,
+                                                <br/> N,N,转科转内分泌科,
+                                                <br/> N,Y,Ⅱ级护理,
+                                                <br/> N,Y,内科常规护理,
+                                                <br/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div v-show="headFault==4">
+                                <input class="form-control" id="type" name="type" type="hidden" value="0" />
+                                <table class="big_table depart" align="center">
+                                    <tr style="height: 30px;" align="center">
+                                        <td class="col-md-1">姓名</td>
+                                        <td class="col-md-2">
+                                            <input class="form-control" placeholder="李华" id="username" name="username" />
+                                        </td>
+                                        <td class="col-md-1">性别</td>
+                                        <td class="col-md-2">
+                                            <input class="form-control " placeholder="女" id="sex" name="sex" />
+                                        </td>
+                                        <td class="col-md-2">身份证号</td>
+                                        <td class="col-md-4">41270219856031618</td>
+                                    </tr>
+
+
+                                    <tr style=" height: 150px;" align="left">
+                                        <td>入院记录</td>
+                                        <td colspan="7">
+                                            无
+                                        </td>
+                                    </tr>
+                                    <tr style=" height: 150px;" align="left">
+                                        <td>病程记录</td>
+                                        <td colspan="7">
+                                            <div class="indent">00006615_1
+                                                <span class="bold">首次病程记录</span> 20170108103237 2017-01-0810:30首次病程记录病历特点： 患者，李华，女，33岁。
+                                                <div>以“头晕恶心1小时”为主诉急诊入院。</div>
+                                                <div>1小时前，无明显诱因出现头晕，头晕多于扭头时发生，伴耳鸣。 1小时来，感头晕明显加重，伴视物旋转，频繁恶心，不伴有意识障碍及大小便失禁，不伴有肢体运动障碍及抽搐，无呕吐。未予以重视，在当地未行治疗。
+                                                    今急来诊，以“头晕原因待查”急诊入院。
+                                                </div>
+                                                <div> 6年前，患“高血压病”、“冠心病心梗支架术后”“糖尿病”。</div>
+                                                <div> 查体：P86次/分，BP140/80mmHg,神志清晰，双侧瞳孔等大等圆，直径约2.5mm,对光反射灵敏，口唇无紫绀，张口伸舌良好。 颈无抵抗。双肺呼吸音清晰，无啰音。心率86次/分，律齐，各瓣膜听诊区未闻及病理性杂音。肝脾肋缘下未触及。
+                                                    四肢肌力肌张力正常。双侧巴氏征阴性。
+                                                </div>
+                                                <div>2017-01-08地址市中心医院头颅CT（影像号1701323）：双侧基底节区、半卵园中心多发腔隙性脑梗塞。</div>
+                                                <div>
+                                                    <span class="bold">指测血糖：</span>12.3mmol/L。心电图提示：窦性心律V1、V2、V3导异常Q波，部分导联呈ST-T改变。</p>
+                                                    <div>
+                                                        <span class="bold">初步诊断：</span>1.头晕原因待查，2.高血压病3级极高危组，3.冠心病陈旧性心肌梗死支架术后缺血心肌病型心功能2级，4.2型糖尿病。</div>
+                                                    <div>
+                                                        <span class="bold">诊断依据：</span>【
+                                                        <span class="bold">①54岁男性患者</span>，以“头晕恶心1小时”为主诉急诊入院。1小时前，无明显诱因出现头晕，头晕多于扭头时发生，伴耳鸣。1小时来，感头晕明显加重，伴视物旋转，频繁恶心，不伴有意识障碍及大小便失禁，不伴有肢体运动障碍及抽搐，无呕吐；</div>
+                                                    <span class="bold">②既往史：</span>6年前，患“高血压病”、“冠心病心梗支架术后”“糖尿病”；
+                                                    <span class="bold">③查体：</span>P86次/分，BP140/80mmHg,神志清晰，张口伸舌良好，心肺听诊未见明显异常，四肢肌力肌张力正常，双侧巴氏征阴性；
+                                                    <span class="bold">④辅助检查：</span>2017-01-08地址>市中心医院头颅CT（影像号1701323）：双侧基底节区、半卵园中心多发腔隙性脑梗塞。】
+                                                    <div>
+                                                        <span class="bold">指测血糖：</span>12.3mmol/L。心电图提示：窦性心律V1、V2、V3导异常Q波，部分导联呈ST-T改变。</div>
+                                                    <div>
+                                                        <span class="bold">鉴别诊断：</span>1.脑梗塞：多在静息状态下急性起病，病情多在几小时或几天内达到姓名>，主要为局灶性神经功能损性症状和体征，如偏瘫、偏身感觉障碍、失语、共济失调等，可行头颅CT或MRI明确诊断；
+                                                        2.前庭周围性眩晕（耳性眩晕）：前庭器官和前庭神经的内听道部分有病变，突然起病，症状较重，持续时间短，可伴有耳鸣、耳聋； 3.前庭神经元炎：首次发病常在呼吸道感染后数天发生，表现为突发性眩晕，恶心呕吐和眼球震颤，神经系统定位检查无异常，发作时间可持续4-6周；
+                                                        4.颈性眩晕：由椎动脉在穿行颈椎横突孔时受压，或颈部交感神经受刺激引起椎动脉痉挛引起，临床特点是既有颈部疾病的表现，又有前庭或耳蜗系统受累的表现，但前庭功能试验一般正常；
+                                                        5.椎-基底动脉供血不足：大多发生于中年以上的患者，多有动脉硬化或颈椎病病史，主要症状是眩晕、头痛、视力障碍、共济失调、意识障碍及脑干定位体征。
+                                                    </div>
+                                                    <div>
+                                                        <span class="bold">诊治计划：</span>完善检查，以利诊治，酌情吸氧及心电监护，营养神经，改善微循环，改善椎基底动脉供血不足，调整血压等。告病重。可能出现偏瘫、失语、精神异常、癫痫发作、心肌缺血加重、心力衰竭甚至昏迷、呼吸衰竭、心室颤动等危及生命的情况已向患者家属禀明，患者家属表示理解。</div>
+
+
+                                                </div>
+                                                <div class="indent">
+
+                                                    00006615_1
+                                                    <span class="bold">病程记录</span> 20170115113136 2017-01-1511:30今随查房，患者神志清、精神可，未再诉头晕等不适。
+                                                    <div>
+                                                        <span class="">③查体：</span>BP135/90mmHgP82次/分，双侧瞳孔等大等圆，直径约2.5mm,对光反射灵敏，口唇无紫绀，张口伸舌良好。
+                                                        颈无抵抗。双肺呼吸音清晰，无啰音。心率78次/分，律齐，各瓣膜听诊区未闻及病理性杂音。肝脾肋缘下未触及。四肢肌力肌张力正常。双侧巴氏征阴性。耳鼻喉会诊回示：患者诉双耳轰轰样耳鸣伴听力下降一年，检查见双耳道无异常分泌物，鼓膜内陷光锥缩短，活动度差。耳鼻喉科建议完善声导抗、纯音测听、ABR及乳突CT检查，完善检查后再联系我科会诊。乳突CT回示：慢性中耳乳突炎。双耳ABR示：双耳ABR异常。再次联系耳鼻喉会诊医生姓名芹，结合检查结果考虑神经性耳聋，建议加用营养神经等对症治疗。昨晚餐后血糖12.6mmol/L，晨起空腹血糖7.8mmol/L。治疗上甘精胰岛素增加为10u/天控制血糖，继续监测血糖，防低血糖。加用甲钴铵营养神经治疗，继续抗血小板聚集，改善循环等对症治疗。
+                                                    </div>
+
+                                                </div>
+                                                <div class="indent">
+                                                    00006615_1
+                                                    <span class="bold">病程记录</span> 20170119165413 2017-01-2009:51今日查房，患者神志清、精神可，未诉特殊不适。查体：BP122/88mmHgP82次/分，双侧瞳孔等大等圆，直径约2.5mm,对光反射灵敏，口唇无紫绀，张口伸舌良好。颈无抵抗。双肺呼吸音清晰，无啰音。心率82次/分，律齐，各瓣膜听诊区未闻及病理性杂音。肝脾肋缘下未触及。四肢肌力肌张力正常。双侧巴氏征阴性。患者现血糖控制可，病情稳定。请示姓名>主任医师，同意出院，告知院外注意事项后办理出院。
+                                                </div>
+                                        </td>
+                                    </tr>
+                                    <tr style=" height: 150px;" align="left">
+                                        <td>会诊记录</td>
+                                        <td colspan="7" id="check">无</td>
+                                    </tr>
+                                    <tr style=" height: 150px;" align="left">
+                                        <td>手术记录</td>
+                                        <td colspan="7" id="check">无
+                                        </td>
+                                    </tr>
+                                    <tr style=" height: 150px;" align="left">
+                                        <td>转诊记录</td>
+                                        <td colspan="7" id="check">无</td>
+                                    </tr>
+                                    <tr style=" height: 150px;" align="left">
+                                        <td>输血记录</td>
+                                        <td colspan="7" id="check">无</td>
+                                    </tr>
+                                    <tr style=" height: 200px;" align="left">
+                                        <td>出院记录</td>
+                                        <td colspan="7" id="suggest">
+                                            <el-collapse v-model="activeNames" @change="handleChange">
+                                                <el-collapse-item title="入院情况：" name="1">
+                                                    <p class="indent">1小时前，无明显诱因出现头晕，头晕多于扭头时发生，伴耳鸣。 1小时来，感头晕明显加重，伴视物旋转，频繁恶心，不伴有意识障碍及大小便失禁，不伴有肢体运动障碍及抽搐，无呕吐。未予以重视，在当地未行治疗。
+                                                        今急来诊，以“头晕原因待查”急诊入院。发病来，精神可，睡眠饮食可，大小便正常。疾病史：6年前，患“高血压病”、“冠心病心梗支架术后”“糖尿病”。
+                                                        <p class="bold indent">体格检查体温：</p>36.5℃，脉搏：86次/分，呼吸20次/分，血压：140/80mmHg一般情况一般，发育正常,营养良好神志清醒，平卧位，无病容，表情自然，查体合作。皮肤黏膜色泽正常，无皮疹，无皮下出血，皮肤湿度正常，皮肤弹性正常，无肝掌，无蜘蛛痣，无皮下出血。全身浅表淋巴结无肿大。头颅正常，眼睑正常，结膜正常，角膜正常，巩膜无黄染，双侧瞳孔等圆，双侧对光反射灵敏。耳廓正常，外耳道无分泌物，乳突无压痛。鼻外形正常，无鼻翼扇动，无异常分泌物，副鼻窦无压痛。口唇红润，舌正常，咽腔无充血，扁桃体无肿大。
+                                                        <p class="bold indent">外科情况：</p>颈部无抵抗，气管正中，颈静脉正常，肝颈静脉回流征阴性，颈静脉搏动正常，甲状腺正常。胸廓正常，胸壁无静脉曲张，乳房正常，胸骨无压痛，肺部呼吸运动正常，肋间隙正常，语颤正常，无胸膜摩擦感，无皮下捻发感，叩诊清音，呼吸规整，左肺呼吸音清，右肺呼吸音清，左肺无啰音，右肺无啰音，心前区无隆起，心尖搏动位置正常，位于左侧第5肋间锁骨中线内侧0.5cm，触诊心尖搏动正常，位置同上，无震颤，无心包摩擦感，叩诊心脏相对浊音界正常，心率86次/分，心律整齐，心音S1正常，心音S2正常，无杂音，无心包摩擦音，无异常血管征。腹部平坦，腹式呼吸存在，无胃型，无肠型，无蠕动波，脐正常，腹壁静脉无曲张，无手术斑痕，无疝块凸出，触诊腹壁柔软，无压痛，无反跳痛，Murphy征阴性，肝脏肋下未触及，脾脏肋下未触及，胆囊未触及，肾脏未触及，腹部未触及包块，肝浊音界存在，移动性浊音阴性，无肾区扣痛，听诊肠鸣音正常，4次/分，无气过水声，无血管杂音，肛门及外生殖器正常。脊柱无畸形，活动度正常，无棘突压痛，无叩痛，四肢无畸形，活动度正常，四肢无指凹性水肿，无杵状指（趾），肌力5级，肌张力正常，无肢体瘫痪，生理反射正常，病理反射未引出。
+                                                        <p class="bold indent">辅助检查：</p>指测血糖：12.3mmol/L。心电图提示：窦性心律V1、V2、V3导异常Q波，部分导联呈ST-T改变。
+                                                        <p class="bold indent">辅助检查：</p>指测血糖：12.3mmol/L。心电图提示：窦性心律V1、V2、V3导异常Q波，部分导联呈ST-T改变。
+                                                    </p>
+                                                </el-collapse-item>
+                                                <el-collapse-item title="入院诊断:" name="2">
+                                                    <div class="indent">
+                                                        <p>1.头晕待查</p>
+                                                        <p>2.高血压病3级（极高危组）</p>
+                                                        <p>3.冠状动脉粥样硬化性心脏病陈旧性心肌梗死冠状动脉支架植入后状态缺血性心肌病心功能Ⅱ级</p>
+                                                        <p>4.2型糖尿病</p>
+                                                        <p>5.慢性中耳乳突炎</p>
+                                                    </div>
+                                                </el-collapse-item>
+                                                <el-collapse-item title="诊疗经过:" name="3">
+                                                    <p class="indent">完善检查，以利诊治，酌情吸氧及心电监护，营养神经，改善微循环，改善椎基底动脉供血不足，调整血压等。监测血糖，防低血糖。加用甲钴铵营养神经治疗，继续抗血小板聚集，改善循环等对症治疗。</p>
+                                                </el-collapse-item>
+                                                <el-collapse-item title="出院诊断:" name="4">
+                                                    <div class="indent">
+                                                        <p>1.头晕待查</p>
+                                                        <p>2.高血压病3级（极高危组）</p>
+                                                        <p>3.冠状动脉粥样硬化性心脏病陈旧性心肌梗死冠状动脉支架植入后状态缺血性心肌病心功能Ⅱ级</p>
+                                                        <p>4.2型糖尿病</p>
+                                                        <p>5.慢性中耳乳突炎</p>
+                                                    </div>
+                                                </el-collapse-item>
+                                                <el-collapse-item title="出院情况：" name="5">
+                                                    <p class="indent">患者现血糖控制可，病情稳定。</p>
+                                                </el-collapse-item>
+                                                <el-collapse-item title="出院医嘱:" name="6">
+                                                    <p class="indent">嘱清淡饮食，多饮水，按时吃药，不适随诊。</p>
+                                                </el-collapse-item>
+                                            </el-collapse>
+
+                                        </td>
+                                    </tr>
+                                </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div v-show="navFault==2">
+                        <div class="app_first">
+                            <div class="Visdoctor">
+                                <div class="h-content">
+                                    <div class="content-right">
+                                        <div class="content-right-top">
+                                            <el-row style="line-height:50px;">
+                                                <span class="p1-name">黄贺医生</span>
+                                                <el-radio-button>出诊</el-radio-button>
+                                                <el-time-picker is-range v-model="value3" placeholder="选择时间范围">
+                                                </el-time-picker>
+                                            </el-row>
+                                        </div>
+                                        <div class="content-right-bottom" style="padding-top: 0">
+                                            <template>
+                                                <el-table :data="preData" border style="width: 100%;">
+                                                    <el-table-column label="时间" width="180">
+                                                        <template scope="scope">
+                                                            <el-icon name="time"></el-icon>
+                                                            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                                        </template>
+                                                    </el-table-column>
+                                                    <el-table-column label="预约人" width="180">
+                                                        <template scope="scope">
+                                                            <div slot="reference" class="name-wrapper">
+                                                                <p>姓名: {{ scope.row.name }}</p>
+                                                                <p class="phone-s">手机号码: {{ scope.row.phone }}</p>
+                                                            </div>
+                                                        </template>
+                                                    </el-table-column>
+                                                    <el-table-column label="状态更改" style="text-aligin:left;">
+                                                        <template scope="scope">
+                                                            <div slot="reference" class="name-span">
+                                                                <span>
+                                                                    <el-button type="text">
+                                                                        <i class="el-icon-document"></i> 详情</el-button>
+                                                                </span>
+                                                                <span>
+                                                                    <el-button type="text" @click="handleDelete(scope.$index, scope.row)">
+                                                                        <i class="el-icon-close"></i> 取消</el-button>
+                                                                </span>
+                                                            </div>
+                                                        </template>
+                                                    </el-table-column>
+                                                </el-table>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="app_second">
+                                <!-- 过滤栏 组件-->
+                                <div >
+                                    <!-- 本周(按钮) -->
+                                    <div class="block col-md-3 week_btn">
+                                        <button class="el-icon-arrow-left btn" @click="getPrevWeek"></button>
+                                        <span class="week" v-text="weekText" v-model="weekText"></span>
+                                        <button class="el-icon-arrow-right btn" @click="getNextWeek"></button>
+                                    </div>
+
+                                    <!-- 日期 -->
+                                    <div class="block">
+                                        <el-date-picker v-model="todayTime_value" type="date" placeholder="选择日期" :picker-options="pickerOptions0"></el-date-picker>
+                                    </div>
+
+                                    <!-- 科室 -->
+                                    <div class="block block_small">
+                                        <el-select v-model="office_value" placeholder="所有科室">
+                                            <el-option v-for="item in office_options" :key="item.office_value" :label="item.office_label" :value="item.office_value">
+                                            </el-option>
+                                        </el-select>
+                                    </div>
+
+                                    <!-- 类型 -->
+                                    <div class="block block_small">
+                                        <el-select v-model="type_value" placeholder="所有类型">
+                                            <el-option v-for="item in type_options" :key="item.type_value" :label="item.type_label" :value="item.type_value">
+                                            </el-option>
+                                        </el-select>
+                                    </div>
+
+                                    <!-- 所有人 -->
+                                    <div class="block block_small">
+                                        <el-select v-model="doctor_value" placeholder="所有人">
+                                            <el-option v-for="item in doctor_options" :key="item.doctor_value" :label="item.doctor_label" :value="item.doctor_value">
+                                            </el-option>
+                                        </el-select>
+                                    </div>
+
+                                    <!-- 复选框(只看我的排班)-->
+                                    <div class="block block1">
+                                        <el-checkbox v-model="checked">只看我的排班</el-checkbox>
+                                    </div>
+
+                                </div>
+                                <div class="table1">
+                                    <div class="btns">
+                                        <el-button type="success" plain @click="dialogFormVisible = true">新增排班</el-button>
+                                        <el-button type="warning" plain @click="add_catchUp">加诊排班</el-button>
+                                        <el-button type="primary" plain @click="edit">编辑排班</el-button>
+                                        <el-button type="danger" plain @click="delete_work_content()">删除排班</el-button>
+                                    </div>
+
+                                    <el-dialog title="新增排班" :visible.sync="dialogFormVisible">
+
+                                        <el-form :model="form">
+
+                                            <el-form-item label="科室:" :label-width="formLabelWidth">
+                                                <el-select v-model="form.office_selected" placeholder="科室" style="width:100px;">
+                                                    <el-option v-for="item in form.office" :value="item.text">
+                                                    </el-option>
+                                                </el-select>
+                                            </el-form-item>
+
+                                            <el-form-item label="医生:" :label-width="formLabelWidth">
+                                                <el-select v-model="form.doctor_selected" style="width:100px;">
+                                                    <el-option v-for="(item,index) in form.doctor" :value="item.name">
+                                                    </el-option>
+                                                </el-select>
+                                            </el-form-item>
+
+                                            <el-form-item label="挂号类型:" :label-width="formLabelWidth">
+                                                <el-select v-model="form.register_selected" style="width:100px;">
+                                                    <el-option v-for="item in form.register" :value="item.type">
+                                                    </el-option>
+                                                </el-select>
+                                            </el-form-item>
+
+                                            <el-form-item label="号段时长:" :label-width="formLabelWidth">
+                                                <el-select v-model="form.time[0].time_long" style="width:100px;">
+                                                    <el-option v-for="item in form.time" :value="item.time_long">
+                                                    </el-option>
+                                                </el-select>
+                                            </el-form-item>
+
+                                            <el-form-item label="排班时段:">
+
+                                                <el-date-picker v-model="form.time_selected" type="date" placeholder="选择日期" :picker-options="form.pickerOptions0"></el-date-picker>
+
+                                                <el-time-select placeholder="起始时间" v-model="form.startTime" :picker-options="{
+                                                        start: '08:30',
+                                                        step: '00:15',
+                                                        end: '18:30'
+                                                    }">
+                                                </el-time-select>
+                                                <el-time-select placeholder="结束时间" v-model="form.endTime" :picker-options="{
+                                                    start: '08:30',
+                                                    step: '00:15',
+                                                    end: '18:30',
+                                                    minTime: form.startTime
+                                                    }">
+                                                </el-time-select>
+                                            </el-form-item>
+                                        </el-form>
+
+
+
+                                        <div slot="footer" class="dialog-footer">
+                                            <el-button @click="dialogFormVisible = false">取 消</el-button>
+                                            <el-button type="primary" @click="add">确 定</el-button>
+                                        </div>
+                                    </el-dialog>
+
+
+                                    <el-dialog title="编辑排班" :visible.sync="edit_dialogFormVisible">
+
+                                        <!-- 弹话框内容 -->
+                                        <el-form :model="form">
+
+
+                                            <!-- 挂号类型 -->
+                                            <el-form-item label="挂号类型:" :label-width="formLabelWidth">
+                                                {{ form.register_selected }}
+                                            </el-form-item>
+
+                                            <!-- 科室 -->
+                                            <el-form-item label="科室:" :label-width="formLabelWidth">
+                                                {{ form.office_selected }}
+                                            </el-form-item>
+
+
+                                            <!-- 医生 -->
+                                            <el-form-item label="医生:" :label-width="formLabelWidth">
+                                                {{ form.doctor_selected }}
+                                            </el-form-item>
+
+
+                                            <!-- 排班时段 -->
+                                            <el-form-item label="排班时段:">
+                                                {{ form.year_selected }}- {{ form.mon_selected }}- {{ form.day_selected }}
+                                                <br>
+                                                <!-- 时间段选择 -->
+                                                <el-time-select placeholder="起始时间" v-model="form.startTime" :picker-options="{
+                                                        start: '08:30',
+                                                        step: '00:15',
+                                                        end: '18:30'
+                                                    }">
+                                                </el-time-select>
+                                                <el-time-select placeholder="结束时间" v-model="form.endTime" :picker-options="{
+                                                    start: '08:30',
+                                                    step: '00:15',
+                                                    end: '18:30',
+                                                    minTime: form.startTime
+                                                    }">
+                                                </el-time-select>
+                                            </el-form-item>
+
+                                        </el-form>
+
+                                        <!-- 编辑排班-弹话框的低下两个按钮 -->
+                                        <div slot="footer" class="dialog-footer">
+                                            <el-button @click="edit_dialogFormVisible = false">取 消</el-button>
+                                            <el-button type="primary" @click="edit_sure">确 定</el-button>
+                                        </div>
+                                    </el-dialog>
+
+
+                                    <el-dialog title="加诊排班" :visible.sync="add_catchUp_dialogFormVisible">
+                                        <el-form :model="form">
+                                            <el-form-item label="科室:" :label-width="formLabelWidth">
+                                                <el-select v-model="form.office_selected" placeholder="科室" style="width:100px;">
+                                                    <el-option v-for="item in form.office" :value="item.text">
+                                                    </el-option>
+                                                </el-select>
+                                            </el-form-item>
+                                            <el-form-item label="医生:" :label-width="formLabelWidth">
+                                                <el-select v-model="form.doctor_selected" style="width:100px;">
+                                                    <el-option v-for="(item,index) in form.doctor" :value="item.name">
+                                                    </el-option>
+                                                </el-select>
+                                            </el-form-item>
+                                            <el-form-item label="挂号类型:" :label-width="formLabelWidth">
+                                                <el-select v-model="form.register_selected" style="width:100px;">
+                                                    <el-option v-for="item in form.register" :value="item.type">
+                                                    </el-option>
+                                                </el-select>
+                                            </el-form-item>
+                                            <el-form-item label="号段时长:" :label-width="formLabelWidth">
+                                                <el-select v-model="form.time[0].time_long" style="width:100px;">
+                                                    <el-option v-for="item in form.time" :value="item.time_long">
+                                                    </el-option>
+                                                </el-select>
+                                            </el-form-item>
+                                            <el-form-item>
+                                                <el-checkbox v-model="form.checked">
+                                                    允许线上预约(如果系统对接了线上挂号App、微信服务号等)
+                                                    <br>
+                                                    <i style="opacity:.7;">如果不希望医生排班对外开放只允许电话预约，则取消勾选</i>
+                                                </el-checkbox>
+                                            </el-form-item>
+                                            <el-form-item label="排班时段:">
+                                                <el-date-picker v-model="form.time_selected" type="date" placeholder="选择日期" :picker-options="form.pickerOptions0"></el-date-picker>
+
+                                                <el-time-select placeholder="起始时间" v-model="form.startTime" :picker-options="{
+                                                        start: '08:30',
+                                                        step: '00:15',
+                                                        end: '18:30'
+                                                    }">
+                                                </el-time-select>
+                                                <el-time-select placeholder="结束时间" v-model="form.endTime" :picker-options="{
+                                                    start: '08:30',
+                                                    step: '00:15',
+                                                    end: '18:30',
+                                                    minTime: form.startTime
+                                                    }">
+                                                </el-time-select>
+                                            </el-form-item>
+                                        </el-form>
+                                        <div slot="footer" class="dialog-footer">
+                                            <el-button @click="add_catchUp_dialogFormVisible = false">取 消</el-button>
+                                            <el-button type="primary" @click="add_catchUp_sure">确 定</el-button>
+                                        </div>
+                                    </el-dialog>
+
+
+                                    <!-- 表单 -->
+                                    <table border="1" cellspacing="0">
+                                        <tr>
+                                            <td v-for="(item,index) in items">
+                                                <span v-model="which_weekDay" v-if="(which_weekDay+index)<7">{{ dayNames[which_weekDay+index]}}</span>
+                                                <span v-else>{{ dayNames[which_weekDay+index-7]}}</span>
+                                                <br>
+
+                                                <span v-if="month===1||month===3 ||month===5 ||month===7||month===8 ||month===10||month===12">
+                                                    <span v-if="(day+index)<=31">{{ month }}-{{ day+index }}</span>
+                                                    <span v-else>{{ month+1 }}-{{ day+index-31 }}</span>
+                                                </span>
+                                                <span v-else-if="month===4||month===6 ||month===9 ||month===11">
+                                                    <span v-if="(day+index)<=30">{{ month }}-{{ day+index }}</span>
+                                                    <span v-else>{{ month+1 }}-{{ day+index-30 }}</span>
+                                                </span>
+                                                <span v-else-if="year%4===0">
+                                                    <span v-if="(day+index)<=29">{{ month }}-{{ day+index }}</span>
+                                                    <span v-else>{{ month+1 }}-{{ day+index-29 }}</span>
+                                                </span>
+                                                <span v-else>
+                                                    <span v-if="(day+index)<=28">{{ month }}-{{ day+index }}</span>
+                                                    <span v-else>{{ month+1 }}-{{ day+index-28 }}</span>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr class="td_65px">
+                                            <td v-for="(item,week_index) in weeks_content">
+                                                <span v-for="(item1,todo_index) in item.todos" @click="find_index(week_index,todo_index)" v-bind:class="{ add_catchUp_myClass : item1.active , findIndex_myClass : item1.findIndex_active}">
+                                                    <br> {{ item1.text }}
+                                                    <br> {{ item1.time_start }} {{ item1.time_end }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 表单 -->
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+</body>
+<script>
+    // 生成截图
+    $("#creat").click(function () {
+        html2canvas($("body"), { // $(".myImg")生成canvas的区域
+            onrendered: function (canvas) {
+                dataURL = canvas.toDataURL("image/png");
+                // $("body").append(canvas);
+                // console.log(dataURL);
+
+                //下载图片
+                $('#down_button').attr('href', dataURL);
+                $('#down_button').attr('download', 'myrecode.png');
+            },
+            width: 320,
+            height: 600,
+        })
+    })
+    //   医生/预览患者/ 
+    function wanShan(e) {
+        $("#xinxi").css("display", "none")
+        $("#bingli").css("display", "block")
+        $("#bingli").addClass('zoomIn')
+    }
+</script>
+<script>
+    var myDate = new Date();
+    var myDate1 = new Date();
+    var app = new Vue({
+        el: '#app',
+        data: {
+            navFault: 1, //导航点击切换
+            fault: 1, //切换
+            //    headerList: 1, //导航点击切换
+            headFault: 1, //切换
+            activeNames: ['1'], //ele折叠面板
+            weekText: "本周",
+            pickerOptions0: {
+                disabledDate(time) {
+                    return time.getTime() < Date.now() - 8.64e7;
+                }
+            },
+            todayTime_value: Date.now(),
+            year: myDate.getFullYear(),
+            month: myDate.getMonth() + 1,
+            day: myDate.getDate(),
+
+            //获取今天是星期几(0-6 0代表星期天)
+            which_weekDay: myDate.getDay(),
+            dayNames: [
+                "星期日",
+                "星期一",
+                "星期二",
+                "星期三",
+                "星期四",
+                "星期五",
+                "星期六"
+            ],
+            userInfo: {
+                userName: "",
+                password: ""
+            },
+            per: {
+                name: '刘医生'
+            },
+
+
+            // 所有科室
+            office_options: [{
+                    office_value: "选项1",
+                    office_label: "小儿科"
+                },
+                {
+                    office_value: "选项2",
+                    office_label: "眼睛科"
+                },
+                {
+                    office_value: "选项3",
+                    office_label: "口腔科"
+                },
+                {
+                    office_value: "选项4",
+                    office_label: "牙科"
+                },
+                {
+                    office_value: "选项5",
+                    office_label: "妇科"
+                }
+            ],
+            office_value: "小儿科",
+            // 所有科室
+            type_options: [{
+                    type_value: "选项1",
+                    type_label: "普通门诊"
+                },
+                {
+                    type_value: "选项2",
+                    type_label: "专家门诊"
+                },
+                {
+                    type_value: "选项3",
+                    type_label: "专科门诊"
+                },
+                {
+                    type_value: "选项4",
+                    type_label: "特需门诊"
+                },
+                {
+                    type_value: "选项5",
+                    type_label: "夜间门诊"
+                }
+            ],
+            type_value: "普通门诊",
+            //所有人
+            doctor_options: [{
+                    doctor_value: "选项1",
+                    doctor_label: "黄医生"
+                },
+                {
+                    doctor_value: "选项2",
+                    doctor_label: "李医生"
+                },
+                {
+                    doctor_value: "选项3",
+                    doctor_label: "牛医生"
+                },
+                {
+                    doctor_value: "选项4",
+                    doctor_label: "张医生"
+                },
+                {
+                    doctor_value: "选项5",
+                    doctor_label: "高医生"
+                }
+            ],
+            doctor_value: "黄医生",
+            //复选框
+            checked: true,
+            // 一个星期
+            //7个休息
+            items: [{
+                    todos: [{
+                        text: "暂无排班",
+                        time_start: "",
+                        time_end: "",
+                        active: false,
+                        findIndex_active: false
+                    }]
+                },
+                {
+                    todos: [{
+                        text: "暂无排班",
+                        time_start: "",
+                        time_end: "",
+                        active: false,
+                        findIndex_active: false
+                    }]
+                },
+                {
+                    todos: [{
+                        text: "暂无排班",
+                        time_start: "",
+                        time_end: "",
+                        active: false,
+                        findIndex_active: false
+                    }]
+                },
+                {
+                    todos: [{
+                        text: "暂无排班",
+                        time_start: "",
+                        time_end: "",
+                        active: false,
+                        findIndex_active: false
+                    }]
+                },
+                {
+                    todos: [{
+                        text: "暂无排班",
+                        time_start: "",
+                        time_end: "",
+                        active: false,
+                        findIndex_active: false
+                    }]
+                },
+                {
+                    todos: [{
+                        text: "暂无排班",
+                        time_start: "",
+                        time_end: "",
+                        active: false,
+                        findIndex_active: false
+                    }]
+                },
+                {
+                    todos: [{
+                        text: "暂无排班",
+                        time_start: "",
+                        time_end: "",
+                        active: false,
+                        findIndex_active: false
+                    }]
+                }
+            ],
+            weekText: "本周",
+            pickerOptions0: {
+                disabledDate(time) {
+                    return time.getTime() < Date.now() - 8.64e7;
+                }
+            },
+            month1: myDate1.getMonth() + 1,
+            day1: myDate1.getDate(),
+            // 所有科室
+            options: [{
+                value: '选项1',
+                label: '儿科'
+            }, {
+                value: '选项2',
+                label: '眼睛科'
+            }, {
+                value: '选项3',
+                label: '口腔科'
+            }, {
+                value: '选项4',
+                label: '牙科'
+            }, {
+                value: '选项5',
+                label: '妇科'
+            }],
+            value: '',
+            //复选框
+            checked: true,
+            weeks: [{
+                    value: "今天"
+                },
+                {
+                    value: "明天"
+                },
+                {
+                    value: "周二"
+                },
+                {
+                    value: "周三"
+                },
+                {
+                    value: "周四"
+                },
+                {
+                    value: "周五"
+                },
+                {
+                    value: "周六"
+                }
+            ],
+            //7个休息
+            active: false,
+            findIndex_active: false,
+            weeks_content: [{
+                    todos: [{
+                        text: "暂无排班",
+                        time_start: "",
+                        time_end: "",
+                        active: false,
+                        findIndex_active: false
+                    }]
+                },
+                {
+                    todos: [{
+                        text: "暂无排班",
+                        time_start: "",
+                        time_end: "",
+                        active: false,
+                        findIndex_active: false
+                    }]
+                },
+                {
+                    todos: [{
+                        text: "暂无排班",
+                        time_start: "",
+                        time_end: "",
+                        active: false,
+                        findIndex_active: false
+                    }]
+                },
+                {
+                    todos: [{
+                        text: "暂无排班",
+                        time_start: "",
+                        time_end: "",
+                        active: false,
+                        findIndex_active: false
+                    }]
+                },
+                {
+                    todos: [{
+                        text: "暂无排班",
+                        time_start: "",
+                        time_end: "",
+                        active: false,
+                        findIndex_active: false
+                    }]
+                },
+                {
+                    todos: [{
+                        text: "暂无排班",
+                        time_start: "",
+                        time_end: "",
+                        active: false,
+                        findIndex_active: false
+                    }]
+                },
+                {
+                    todos: [{
+                        text: "暂无排班",
+                        time_start: "",
+                        time_end: "",
+                        active: false,
+                        findIndex_active: false
+                    }]
+                }
+            ],
+            // 拿到删除的下标
+            todo_index: '',
+            week_index: '',
+            dialogFormVisible: false,
+            edit_dialogFormVisible: false,
+            add_catchUp_dialogFormVisible: false,
+            form: {
+                office: [{
+                        text: "儿科"
+                    },
+                    {
+                        text: "眼睛科"
+                    },
+                    {
+                        text: "口腔科"
+                    },
+                    {
+                        text: "牙科"
+                    },
+                    {
+                        text: "妇科"
+                    }
+                ],
+                office_selected: "儿科",
+                doctor: [{
+                        name: "黄医生"
+                    },
+                    {
+                        name: "李医生"
+                    },
+                    {
+                        name: "牛医生"
+                    },
+                    {
+                        name: "张医生"
+                    },
+                    {
+                        name: "高医生"
+                    }
+                ],
+                doctor_selected: "黄医生",
+                register: [{
+                        type: "普通门诊"
+                    },
+                    {
+                        type: "专家门诊"
+                    },
+                    {
+                        type: "专科门诊"
+                    },
+                    {
+                        type: "特需门诊"
+                    },
+                    {
+                        type: "夜间门诊"
+                    }
+                ],
+                register_selected: "普通门诊",
+                time: [{
+                        time_long: "20分钟"
+                    },
+                    {
+                        time_long: "30分钟"
+                    },
+                    {
+                        time_long: "40分钟"
+                    },
+                    {
+                        time_long: "50分钟"
+                    },
+                    {
+                        time_long: "60分钟"
+                    }
+                ],
+                pickerOptions0: {
+                    disabledDate(time) {
+                        return time.getTime() < Date.now() - 8.64e7;
+                    }
+                },
+                time_selected: Date.now(),
+                year_selected: "",
+                mon_selected: "",
+                day_selected: "",
+                region: '',
+                checked: true,
+                startTime: '',
+                endTime: '',
+            },
+
+            formLabelWidth: '80px',
+            preData: [ // 排班
+                {
+                    date: "09:00~10.00",
+                    name: "李华 ",
+                    phone: "13012312311"
+                },
+
+                {
+                    date: "10:00~11.00",
+                    name: "杜豪杰",
+                    phone: "13012312311"
+                },
+                {
+                    date: "11:00~12.00",
+                    name: "李华红 ",
+                    phone: "13012312311"
+                }
+            ],
+            value3: [new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)],
+            formInline: {
+                user: '',
+                region: ''
+            },
+
+        },
+        props: {
+            // 设置图表的宽度
+            width: {
+                type: String,
+                default: "500px"
+            },
+            // 设置图表的高度
+            height: {
+                type: String,
+                default: "500px"
+            }
+        },
+        methods: {
+            handleChange(val) {
+                console.log(val);
+            },
+            //出诊点击删除
+            handleDelete(index, row) {
+                this.preData.splice(index, 1);
+                this.$message({
+                    message: "操作成功！",
+                    type: 'success'
+                });
+            },
+            navList(i) {
+                this.navFault = i
+            },
+            headerList(l) {
+                this.headFault = l
+            },
+            getPrevWeek: function () {
+                this.weekText = "上周";
+                this.day = this.day - 7;
+                console.log("打印出this.day", this.day);
+
+                if (this.day <= 0) {
+                    this.day = this.day + 31;
+                    this.month = this.month - 1;
+                }
+                // if(this.day === this.todayTime_value.getDay() && this.month === (this.todayTime_value.getMonth() + 1))
+                // {
+                // 	this.weekText = "本周";
+                // 	console.log("本周")
+                // }
+                if (this.month < 1) {
+                    this.month = this.month + 12;
+                    this.year = this.year - 1;
+                }
+                if (this.month > 12) {
+                    this.month = this.month - 12;
+                }
+            },
+            getNextWeek: function () {
+                console.log("下周");
+                this.weekText = "下周";
+                this.day = this.day + 7;
+                if (this.day > 31) {
+                    this.day = this.day - 31;
+                    this.month = this.month + 1;
+                }
+                if (this.month > 12) {
+                    this.month = this.month - 12;
+                    this.year = this.year + 1;
+                }
+
+                if (this.day === new Date()) {
+                    this.weekText = "本周";
+                }
+
+            },
+            add: function () {
+                var vm = this;
+                this.dialogFormVisible = false;
+                console.log(this.form.doctor_selected);
+                console.log('---获取当前的时间', new Date());
+                console.log('---获取选中时间', this.form.time_selected);
+
+
+                console.log('---获取的时间', new Date(this.form.time_selected).getTime());
+                console.log('---获取的月份:', new Date(this.form.time_selected).getMonth() + 1);
+                console.log('---获取的日:', new Date(this.form.time_selected).getDate());
+                console.log('---当前的月:', this.month1);
+                console.log('---当前的日:', this.day1);
+
+                console.log('---开始时间:', this.form.startTime);
+                console.log('---结束时间:', this.form.endTime);
+
+                var year = new Date(this.form.time_selected).getFullYear();
+                var mon = new Date(this.form.time_selected).getMonth() + 1;
+                var day = new Date(this.form.time_selected).getDate();
+                this.form.year_selected = year;
+                this.form.mon_selected = mon;
+                this.form.day_selected = day;
+                for (let i = 0; i < 7; i++) {
+                    if (mon === this.month1 && day === (this.day1 + i)) {
+                        // 如果(text ==="休息"),pop出来
+                        if (this.weeks_content[i].todos[0].text === "暂无排班") {
+                            this.weeks_content[i].todos.pop();
+                        }
+
+                        var a = this.form.doctor_selected;
+                        var b = this.form.startTime;
+                        var c = this.form.endTime;
+                        this.weeks_content[i].todos.push({
+                            text: a,
+                            time_start: b,
+                            time_end: c,
+                            active: false,
+                            findIndex_active: false
+                        });
+
+                    }
+                }
+            },
+            find_index: function (week_index, todo_index) {
+                console.log("拿到weeks数组下标", week_index);
+                console.log("拿到todos数组下标", todo_index);
+                var rest_week_index = this.week_index;
+                var rest_todo_index = this.todo_index;
+                this.week_index = week_index;
+                this.todo_index = todo_index;
+
+                // 未选中的不变色
+                if (rest_week_index !== '' && rest_todo_index !== '') {
+                    this.weeks_content[rest_week_index].todos[rest_todo_index].findIndex_active = false;
+                }
+                // 选中的变色
+                this.weeks_content[week_index].todos[todo_index].findIndex_active = true;
+
+            },
+            delete_work_content: function () {
+                console.log(this.week_index, this.todo_index);
+                this.weeks_content[this.week_index].todos.splice(this.todo_index, 1);
+
+                if (this.weeks_content[this.week_index].todos.length <= 0) {
+                    this.weeks_content[this.week_index].todos.push({
+                        text: "暂无排班",
+                        time_start: "",
+                        time_end: "",
+                        active: false,
+                        findIndex_active: false
+                    });
+                }
+
+            },
+            edit: function () {
+                console.log("编辑排班拿到的weeks_content下标", this.week_index);
+                console.log("编辑排班拿到的todos下标", this.todo_index);
+                console.log("编辑排班拿到的选中的医生的类型", this.form.register_selected);
+                console.log("编辑排班拿到的选中的医生的科室", this.form.office_selected);
+                console.log("编辑排班拿到的选中的医生", this.form.doctor_selected);
+                console.log("编辑排班拿到的选中的医生的类型", this.form.time_selected);
+                console.log("编辑排班拿到的选中的医生", this.form.startTime);
+                console.log("编辑排班拿到的选中的医生", this.form.endTime);
+                this.edit_dialogFormVisible = true;
+                if (this.weeks_content[this.week_index].todos[this.todo_index].text === "暂无排班") {
+                    this.edit_dialogFormVisible = false;
+                }
+            },
+            edit_sure: function () {
+                this.weeks_content[this.week_index].todos[this.todo_index].time_start = this.form.startTime;
+                this.weeks_content[this.week_index].todos[this.todo_index].time_end = this.form.endTime;
+                this.edit_dialogFormVisible = false;
+            },
+            add_catchUp: function () {
+                this.add_catchUp_dialogFormVisible = true;
+            },
+            add_catchUp_sure: function () {
+                var add_catchUp_year = new Date(this.form.time_selected).getFullYear();
+                var add_catchUp_mon = new Date(this.form.time_selected).getMonth() + 1;
+                var add_catchUp_day = new Date(this.form.time_selected).getDate();
+                this.form.year_selected = add_catchUp_year;
+                this.form.mon_selected = add_catchUp_mon;
+                this.form.day_selected = add_catchUp_day;
+                for (let i = 0; i < 7; i++) {
+                    if (add_catchUp_mon === this.month1 && add_catchUp_day === (this.day1 + i)) {
+                        // 如果(text ==="休息"),pop出来
+                        if (this.weeks_content[i].todos[0].text === "暂无排班") {
+                            this.weeks_content[i].todos.pop();
+                        }
+
+                        var add_catchUp_a = this.form.doctor_selected;
+                        var add_catchUp_b = this.form.startTime;
+                        var add_catchUp_c = this.form.endTime;
+                        this.weeks_content[i].todos.push({
+                            text: add_catchUp_a,
+                            time_start: add_catchUp_b,
+                            time_end: add_catchUp_c,
+                            active: true,
+                            findIndex_active: false
+                        });
+                        // this.active = true;
+                    }
+                }
+                this.add_catchUp_dialogFormVisible = false;
+
+            }
+        }
+    })
+</script>
+
+</html>

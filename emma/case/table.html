@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title></title>
+
+	<link rel="stylesheet" href="./css/segment.css">
+	<link rel="stylesheet" href="./css/bootstrap.min.css">
+	<script src="./js/jquery.min.js"></script>
+	<script src="./js/segment.js"></script>
+	<script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="./js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<div class="myImg" style="position:relative;">
+		<nav class="navbar navbar-default" style="color:#fff !important">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+					    aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" style="color:rgb(102,173,229)" href="#">艾玛医疗</a>
+				</div>
+
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<form class="navbar-form navbar-left">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Search">
+						</div>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+								用户名<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#">个人信息</a>
+								</li>
+								<li role="separator" class="divider"></li>
+								<li>
+									<a href="#">设置</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+			<!-- /.container-fluid -->
+		</nav>
+		<input class="form-control" id="type" name="type" type="hidden" value="0" />
+		<table class="big_table" align="center">
+			<tr style="height: 30px;" align="center">
+				<td class="col-md-1">姓名</td>
+				<td class="col-md-2">
+					<input class="form-control" id="username" name="username" />
+				</td>
+				<td class="col-md-1">性别</td>
+				<td class="col-md-2">
+					<input class="form-control" id="sex" name="sex" />
+				</td>
+				<td class="col-md-2">出生日期</td>
+				<td class="col-md-4">
+					<input class="form-control" id="birthday" name="birthday" type="date" />
+				</td>
+			</tr>
+			<tr class="theme_two" align="center">
+				<td class="col-md-1">年龄</td>
+				<td class="col-md-2">
+					<input class="form-control" id="age" name="age" type="number" />
+				</td>
+				<td class="col-md-1">婚史</td>
+				<td class="col-md-2">
+					<select class="selectform-control" name="marry">
+						<option value="0">未婚</option>
+						<option value="1">已婚</option>
+					</select>
+				</td>
+
+				<td class="col-md-2">入院日期</td>
+				<td class="col-md-4" id="in_time"></td>
+			</tr>
+			<tr class="center">
+				<td class="col-md-1">过敏史</td>
+				<td class="col-md-2">
+					<input class="form-control" id="history" name="history" />
+				</td>
+				<td class="col-md-1">病史陈述者</td>
+				<td class="col-md-2">
+					<input class="form-control" id="speak" name="speak" />
+				</td>
+
+				<td class="col-md-2">记录日期</td>
+				<td class="col-md-4" id="log_time"></td>
+			</tr>
+
+			<tr style="height: 200px;" align="left">
+				<td>记录</td>
+				<td colspan="7" id="log">
+					<textarea rows="3" cols="20" style="resize:none;" class="form-control" id="user_input"></textarea>
+				</td>
+			</tr>
+			<tr style=" height: 200px;" align="left">
+				<td>诊断 (疑似)</td>
+				<td colspan="7" id="check"></td>
+			</tr>
+			<tr style=" height: 200px;" align="left">
+				<td>建议</td>
+				<td colspan="7" id="suggest"></td>
+			</tr>
+		</table>
+		<div class="btn_result center">
+			<a type="button" id="down_button">
+				<input type="button" class="btn btn-success" id="creat" onclick="sendPost(event)" value="提交" />
+			</a>
+			<input type="button" class="btn btn-info" onclick="resetDate()" value="重新诊断" />
+		</div>
+	</div>
+</body>
+<script>
+	// type = null;
+
+	// 生成截图
+	$("#creat").click(function () {
+		html2canvas($("body"), { // $(".myImg")生成canvas的区域
+			onrendered: function (canvas) {
+				dataURL = canvas.toDataURL("image/png");
+				// $("body").append(canvas);
+				// console.log(dataURL);
+
+				//下载图片
+				$('#down_button').attr('href', dataURL);
+				$('#down_button').attr('download', 'myrecode.png');
+			},
+			width: 320,
+			height: 600,
+		})
+	})
+</script>
+
+</html>

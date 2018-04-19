@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>门诊</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/doctor.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/elementIndex.css">
+    <!-- <link rel="stylesheet" href="css/animate.min.css"> -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/segment.js"></script>
+    <style>
+        #xinxi {
+            display: block;
+        }
+
+        #bingli {
+            display: none;
+        }
+
+        /* .btn4{
+            display: none;
+        } */
+
+        .navTheme {
+            padding-bottom: 0.75rem;
+            border-bottom: 0.225rem solid #409EFF;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <nav class="panel panel-info">
+            <div class="container-fluid panel-heading">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                        aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">EMMA智能数字化医院信息管理系统</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="请输入寻找的关键词">
+                        </div>
+                        <button type="submit" class="btn btn-default">搜索</button>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#">清除缓存</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                黄贺医生
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">账户</a>
+                                </li>
+                                <li>
+                                    <a href="#">个人信息</a>
+                                </li>
+                                <li>
+                                    <a href="#">设置</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="#">退出</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </nav>
+        <div class="main">
+            <div class="left">
+                <ul class="center">
+                    <li style="list-style-type:none;">
+                        <div class="theme" @click="navList(1)">
+                            <span :class="{'navTheme':(navFault==1)}">
+                                <a>门诊管理</a>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="right">
+                <div v-show="navFault==1">
+                    <input class="form-control" id="type" name="type" type="hidden" value="0" />
+                    <table class="big_table" align="center">
+                        <tr style="height: 30px;" align="center">
+                            <td class="col-md-1">姓名</td>
+                            <td class="col-md-2">
+                                <input class="form-control" id="username" name="username" />
+                            </td>
+                            <td class="col-md-1">性别</td>
+                            <td class="col-md-2">
+                                <input class="form-control" id="sex" name="sex" />
+                            </td>
+                            <td class="col-md-2">出生日期</td>
+                            <td class="col-md-4">
+                                <input class="form-control" id="birthday" name="birthday" type="date" />
+                            </td>
+                        </tr>
+                        <tr class="theme_two" align="center">
+                            <td class="col-md-1">年龄</td>
+                            <td class="col-md-2">
+                                <input class="form-control" id="age" name="age" type="number" />
+                            </td>
+                            <td class="col-md-1">婚史</td>
+                            <td class="col-md-2">
+                                <select class="selectform-control" name="marry">
+                                    <option value="0">未婚</option>
+                                    <option value="1">已婚</option>
+                                </select>
+                            </td>
+
+                            <td class="col-md-2">入院日期</td>
+                            <td class="col-md-4" id="in_time"></td>
+                        </tr>
+                        <tr class="center">
+                            <td class="col-md-1">过敏史</td>
+                            <td class="col-md-2">
+                                <input class="form-control" id="history" name="history" />
+                            </td>
+                            <td class="col-md-1">病史陈述者</td>
+                            <td class="col-md-2">
+                                <input class="form-control" id="speak" name="speak" />
+                            </td>
+
+                            <td class="col-md-2">记录日期</td>
+                            <td class="col-md-4" id="log_time"></td>
+                        </tr>
+
+                        <tr style="height: 200px;" align="center">
+                            <td>主诉</td>
+                            <td colspan="3" id="">
+                                <textarea rows="6" cols="30" style="resize:none;" class="form-control" id="user_shuo"></textarea>
+                            </td>
+                            <td>问诊提示</td>
+                            <td colspan="3" id="new_log">
+                                <div class="btn1">
+                                    <div class="choice">
+                                        <input class="form-control" placeholder="请输入症状亦可如下选择" id="zhengzhuang" name="zhengzhuang" />
+                                    </div>
+                                    <div class="btn_result center">
+                                        <a type="button" id="down_button">
+                                            <input type="button" class="btn btn-success" id="creat" @click="inPost()" value="提交" />
+                                        </a>
+                                    </div>
+                                    <div class="bodyArr btn2">
+                                        <span>请选择以下部位：(单选)</span>
+                                        <div class="arr" v-for="(bodily,index) in bodyArr">
+                                            <button type="button" class="btn btn-default clearfix bodMsg" @click="bodItem(index)">
+                                                {{bodily}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="btn3" v-for="(bod,index) in bod_Item_Text">
+                                    {{bod}}{{index}}
+                                </div>
+
+                                <div class="btn4">
+                                    <div class="quest_ans" v-for="(an,index) in sidText">
+                                        <p>{{an}}</p>
+                                        <p>{{an.answerText}}</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style=" height: 200px;" align="center">
+                            <td>诊断</td>
+                            <td colspan="7" id="check"></td>
+                        </tr>
+                        <tr style=" height: 200px;" align="center">
+                            <td>医嘱</td>
+                            <td colspan="7" id="check">
+                                <div>检查：
+                                    <button class="btn btn-default" onclick="window.location='1.html'">
+                                        申请检查单
+                                    </button>
+                                </div>
+                                <div>用药：</div>
+                                
+                            </td>
+                        </tr>
+                        <tr style=" height: 200px;" align="left">
+                            <td>检验文件</td>
+                            <td colspan="7">
+                                <button class="btn btn-danger">智能分析</button>
+                            </td>
+                        </tr>
+                        <tr style=" height: 200px;" align="left">
+                            <td>检查结果</td>
+                            <td colspan="7" id="suggest"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                navFault: 1, //导航点击切换
+                fault: 1, //切换
+                bodyArr: [],
+                bod_Item_Text: {},
+                quest: [],
+                // quest_ans: [],
+                bingCode: '',
+                sidText: {},
+            },
+            mounted: function () {
+                this.inPost();
+                this.bodItem();
+                this.startsession();
+                this.saveId();
+            },
+            methods: {
+                navList(i) {
+                    this.navFault = i
+                },
+                inPost: function () {
+                    // $('.btn2').css("display", "block")
+                    axios({
+                        method: "post",
+                        url: "http:192.168.0.113:8080/inquiry/getallsymptom"
+                    }).then(function (res) {
+                        this.bodyArr = res.data.list;
+                    }.bind(this))
+                },
+                bodItem: function (index) {
+                    var _this = this;
+                    var td = $('#new_log');
+                    var text;
+                    var bod_Item_Text = {};
+                    td.click(function (e) {
+                        e.stopPropagation();
+                        var target = e.target;
+                        text = target.textContent;
+                        $('#zhengzhuang').val(text);
+                        $('#user_shuo').val(text)
+                        console.log(text)
+                        $('.btn2').css("display", "none")
+                        // $('.btn4').css("display", "block")
+                        $.ajax({
+                            method: "post",
+                            url: "http://192.168.0.113:8080/inquiry/getallsymptom",
+                            data: {
+                                'symptom': text,
+                            },
+                            success: function (res) {
+                                console.log('symptom', res.list)
+                                _this.bod_Item_Text = res.list
+                            }
+                        })
+
+                    });
+                },
+                startsession: function () {
+                    var _this = this;
+                    var td = $('#new_log');
+                    var textCode;
+                    td.click(function (e) {
+                        var target = e.target;
+                        console.log("textBefore0" + target.textContent);
+                        textCode = parseInt(target.textContent);
+                        console.log("textBefore1-------" + textCode);
+                        $('#zhengzhuang').val(textCode);
+                        // $('.btn4').css("display", "block")
+                        $.ajax({
+                            method: "post",
+                            url: "http://192.168.0.113:8080/inquiry/startsession",
+                            data: {
+                                'symptomId': textCode,
+                                paramStr: ''
+                            },
+                            success: function (res) {
+                                console.log('sid', res.list.sid);
+                                _this.bingCode = res.list.sid;
+                                _this.saveId(_this.bingCode)
+                            }
+                        })
+                    });
+                    console.log("textvalue" + textCode);
+                },
+                saveId: function (e) {
+                    var _this = this;
+                    (_this.saId = e);
+                    console.log('eeeeeeeeee', e)
+                    //  $('.bodyArr').css("display", "none")
+                    $.ajax({
+                        method: "post",
+                        url: "http://192.168.0.113:8080/inquiry/fetchquestion",
+                        data: {
+                            sid: _this.saId,
+                        },
+                        success: function (res) {
+                            // e.stopPropagation()
+                            if (_this.sidText==[]){
+                                $('.btn4').html('询问完毕。。。')
+                                return false
+                                // console.log(11111111111)
+                                // $('.btn4').html('询问完毕。。。')
+                                // alert('over!')
+                            }
+                            else if (_this.sidText != []) {
+                                console.log(222222222222)
+                                console.log(_this.sidText)
+                                $('.btn2').css("display", "none")
+                                alert('还有!')
+                                _this.sidText = res.list;
+                                
+                            } 
+                        }
+                    })
+
+                },
+
+            },
+
+
+        })
+    </script>
+</body>
+
+</html>

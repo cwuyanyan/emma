@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    label {
+        cursor: pointer;
+    }
+</style>
+
+<body>
+
+
+
+    <div class="alertBoxBg" id="alertBoxBg">
+        <div class="alertBox">
+            <form id="imgForm" action="http://192.168.0.118:8080/check/uploadCheckImg" method="post" style="height: 100%;width: 100%;border: 0 solid;padding: 0;background-color: #EEEEEE">
+                <div class="imgHeader">图片上传
+                </div>
+                <div class="imgBox"></div>
+                <div class="imgAdd">
+                    <input type="file" style="width: 50px;height: 50px;position:absolute;opacity:0;z-index: 10;" onchange="imgSubmit()" id="imgSend"
+                        name="file">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true">
+                    </span>
+                </div>
+            </form>
+            <button class="btn btn-success" id="imgBoxClose" style="position: absolute;right: 20px;bottom: 10px" onclick="imgBoxClose()">确认图片</button>'
+        </div>
+    </div>
+
+
+    <div class="alertBoxBg1" id="alertBoxBg1">
+        <div class="alertBox1">
+            <form id="imgForm1" action="http://192.168.0.118:8080/check/uploadCheckImg" method="post" style="height: 100%;width: 100%;border: 0 solid;padding: 0;background-color: #EEEEEE">
+                <div class="imgHeader1">图片上传2
+                </div>
+                <div class="imgBox1"></div>
+                <div class="imgAdd1">
+                    <input type="file" style="width: 50px;height: 50px;position:absolute;opacity:0;z-index: 10;" onchange="imgSubmit1()" id="imgSend1"
+                        name="file">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true">
+                    </span>
+                </div>
+            </form>
+            <button class="btn btn-success" id="imgBoxClose1" style="position: absolute;right: 20px;bottom: 10px" onclick="imgBoxClose1()">确认图片</button>'
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <div class="tab-pane fade in active" id="interrogation">
+        <div id="interrogationContainer" class="health animated">
+            <div class="container-fluid">
+                <div class="panel panel-default">
+                    <div class="panel-body" id="interrogation_one" style="display: none">
+                        <div class="animated">
+                            <div class="col-lg-12 text-right">
+                                <div class="btn btn-success" style="margin-bottom: 40px" onclick="interrogationToTwo()">新增病例</div>
+                            </div>
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>id</th>
+                                        <th>姓名</th>
+                                        <th>民族</th>
+                                        <th>住址</th>
+                                        <th>联系方式</th>
+                                        <th>身份证号</th>
+                                        <th>状态</th>
+                                        <th>详情</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="allPer">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="interrogation_two" class="container-fluid" style="padding: 50px 100px;display: block">
+                        <div class="center" align="right" style="padding: 30px 20px;">
+                            <div class="btn btn-default" onclick="interrogationToOne()">上一页</div>
+                        </div>
+                        <table class="men" align="center" border="0">
+                            <tr style="height: 30px;" align="center">
+                                <td class="col-md-1">初诊：</td>
+                                <td class="col-md-1">
+                                    <input type="text" id="user_start">
+                                </td>
+                                <td class="col-md-1">科室：</td>
+                                <td class="col-md-1">
+                                    <input type="text" id="user_department">
+                                </td>
+                                <td class="col-md-1">姓名：</td>
+                                <td class="col-md-1">
+                                    <input type="text" id="user_name">
+                                </td>
+                                <td class="col-md-1">性别：</td>
+                                <td class="col-md-1">
+                                    <input type="text" id="user_sex">
+                                </td>
+                                <td class="col-md-1">年龄：</td>
+                                <td class="col-md-1">
+                                    <input type="text" id="user_age">
+                                </td>
+                            </tr>
+                            <tr style="height: 400px;" align="center">
+                                <td>主诉:</td>
+                                <td colspan="4">
+                                    <textarea rows="6" cols="20" style="resize:none;" class="form-control" id="user_told" disabled></textarea>
+                                </td>
+                                <td>问询:</td>
+                                <td colspan="4">
+                                    <div class="form-inline text-left">
+                                        <div class="form-group">
+                                            <input type="text" id="searchKey" class="form-control" placeholder="病症">
+                                        </div>
+                                        <button type="submit" class="btn btn-success" id="askQus" onclick="askQus()">
+                                            搜索
+                                        </button>
+                                    </div>
+                                    <div class="askBox text-left" id="askBox" style="min-height: 200px;width: 100%;border: 0px solid gray;margin-top: 30px; padding: 10px 0">
+
+                                        <!-- <div class="col-lg-12">血压是多少? </div>
+                                        <div class="col-lg-12 singleSelect" style="margin-top: 20px">
+                                            <label for="userAns"></label>
+                                            <input type="text" id="userAns"  placeholder="请输入你的回答...">
+                                        </div>
+                                        <div class=" btnBox col-lg-12 text-right " style="margin-top: 20px; ">
+                                            <div class="btn btn-success btnAskSelect
+                                                " data-qusId=' + obj.questionId + ' data-qusText=" ' + obj.questionText + ' "
+                                                data-selectType=' + qusSelectType + ' data-sid=' + sid + ' data-qusAsk=' + qusType + '>提交</div>
+                                        </div> -->
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="height: 200px; " align="center ">
+                                <td>现病史:</td>
+                                <td colspan="9 ">
+                                    <textarea rows="3 " cols="20 " style="resize:none; " class="form-control
+                                                " id="user_nowDisease "></textarea>
+                                </td>
+                            </tr>
+                            <tr style="height: 200px; " align="center ">
+                                <td>既往史:</td>
+                                <td colspan="9 " id="ago_his ">
+                                    <textarea rows="3 " cols="20 " style="resize:none; " class="form-control
+                                                " id="user_oldDisease "></textarea>
+                                </td>
+                            </tr>
+                            <tr style="height: 200px; " align="center ">
+                                <td>体格检查:</td>
+                                <td colspan="9 " id="tige ">
+                                    <textarea rows="3 " cols="20 " style="resize:none; " class="form-control
+                                                " id="user_bodyCheck "></textarea>
+                                </td>
+                            </tr>
+                            <tr style="height: 200px; " align="center ">
+                                <td>辅助检查:</td>
+                                <td colspan="9 " id="assist ">
+                                    <textarea rows="3 " cols="20 " style="resize:none; " class="form-control
+                                                " id="user_assistCheck "></textarea>
+                                </td>
+                            </tr>
+                            <tr style=" height: 200px; " align="center ">
+                                <td>诊断:</td>
+                                <td colspan="9 " id="diagnose ">
+                                    <textarea rows="6 " disabled placeholder="录入 " cols="20 " style="resize:none;
+                                                " class="form-control " id="user_diagnose"></textarea>
+                                </td>
+                            </tr>
+                            <tr style=" height: 200px; " align="center ">
+                                <td>医嘱:</td>
+                                <td colspan="9 " id="suggest ">
+                                    <div class="text-left ">
+                                        <button class="btn btn-default " onclick="changToCheck() ">检查申请单</button>
+                                        <button class="btn btn-default " onclick="changToMedicine() ">药物申请单</button>
+                                    </div>
+                                    <div class="panel panel-default ">
+                                        <div class="panel-body " style="overflow:auto ">
+                                            <!-- 检查申请项 -->
+                                            <!-- <div class="animated checkList " id="checkBox ">
+                                                <div class="col-lg-12 text-right " style="padding: 20px 0 ">
+                                                    <div class="btn btn-default " onclick="interrogatio_addOneCheck() ">增加一项</div>
+                                                </div>
+                                                <table class="table table-bordered table-striped table-hover ">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>检查项目</th>
+                                                            <th>检查方法</th>
+                                                            <th>检查部位</th>
+                                                            <th>检查科室</th>
+                                                            <th>价格</th>
+                                                            <th>状态</th>
+                                                            <th>操作</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="checkList ">
+                                                    </tbody>
+                                                </table>
+                                            </div> -->
+                                            <!-- 药物清单 -->
+                                            <div class="animated medicineList " id="medicineBox " style="display:
+                                                block;overflow:auto ">
+                                                <div class="col-lg-12 text-right " style="padding: 20px 0 ">
+                                                    <div class="btn btn-default " onclick="interrogatio_addOneMedicine() ">增加一项</div>
+                                                </div>
+                                                <table class="table table-bordered table-striped table-hover
+                                                text-center " id="medicineTable ">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-md-1 ">药嘱名称</th>
+                                                            <th class="col-md-1 " style="max-width: 80px; ">单次剂量</th>
+                                                            <th class="col-md-1 " style="min-width: 80px; ">剂量单位</th>
+                                                            <th class="col-md-1 " style="max-width: 80px; ">频次</th>
+                                                            <th class="col-md-1 ">用法</th>
+                                                            <th class="col-md-1 " style="max-width: 80px; ">疗程</th>
+                                                            <th class="col-md-1 " style="max-width: 80px; ">单价</th>
+                                                            <th class="col-md-1 " style="max-width: 80px; ">数量</th>
+                                                            <th class="col-md-1 " style="min-width: 80px; ">数量单位</th>
+                                                            <th class="col-md-1 " style="max-width: 80px; ">可用天数</th>
+                                                            <th class="col-md-1 " style="max-width: 80px; ">开始日期</th>
+                                                            <!-- <th class="col-md-1 ">操作</th> -->
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="medicineList ">
+                                                    </tbody>
+                                                </table>
+                                                <div class="price text-right " style="padding-right:20px ">
+                                                    总价：￥
+                                                    <span id="medicinePrice " style="font-size:20px;color:
+                                                green;font-weight: bold ">0</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- <tr style=" height: 200px; " align="center ">
+                                <td>检查结果:</td>
+                                <td colspan="9 ">
+                                    <textarea rows="3 " cols="20 " style="resize:none; " class="form-control
+                                                " id="user_checkResult "></textarea>
+                                </td>
+                            </tr> -->
+                            <tr style=" height: 200px; " align="center ">
+                                <td>批注:</td>
+                                <td colspan="9 " id="note ">
+                                    <textarea rows="3 " cols="20 " style="resize:none; " class="form-control
+                                                " id="user_comment "></textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="submit text-right ">
+                            <button class="btn btn-success " onclick="submitAskContent(this) ">提交</button>
+                        </div>
+                    </div>
+                    <div id="interrogation_three " class="container-fluid " style="padding: 50px 100px;display:
+                                                none ">
+                        <div class="center " align="right " style="padding: 30px 20px; ">
+                            <div class="btn btn-default " onclick="interrogationToOne() ">上一页</div>
+                        </div>
+                        <table class="men " align="center ">
+                            <tr style="height: 30px; " align="center ">
+                                <td class="col-md-1 ">初诊</td>
+                                <td class="col-md-1 ">
+                                    <input class="form-control " type="text " id="user_start2 " disabled>
+                                </td>
+                                <td class="col-md-1 ">科室：</td>
+                                <td class="col-md-1 ">
+                                    <input class="form-control " type="text " id="user_department2 " disabled>
+                                </td>
+                                <td class="col-md-1 ">姓名：</td>
+                                <td class="col-md-1 ">
+                                    <input class="form-control " type="text " id="user_name2 " disabled>
+                                </td>
+                                <td class="col-md-1 ">性别：</td>
+                                <td class="col-md-1 ">
+                                    <input class="form-control " type="text " id="user_sex2 " disabled>
+                                </td>
+                                <td class="col-md-1 ">年龄：</td>
+                                <td class="col-md-1 ">
+                                    <input class="form-control " type="text " id="user_age2 " disabled>
+                                </td>
+                            </tr>
+                            <tr style="height: 200px; " align="center ">
+                                <td>主诉:</td>
+                                <td colspan="9 ">
+                                    <textarea rows="3 " cols="20 " style="resize:none; " class="form-control
+                                                " id="user_told2 " disabled></textarea>
+                                </td>
+                            </tr>
+                            <tr style="height: 200px; " align="center ">
+                                <td>现病史:</td>
+                                <td colspan="9 ">
+                                    <textarea rows="3 " cols="20 " style="resize:none; " class="form-control
+                                                " id="user_nowDisease2 " disabled></textarea>
+                                </td>
+                            </tr>
+                            <tr style="height: 200px; " align="center ">
+                                <td>既往史:</td>
+                                <td colspan="9 ">
+                                    <textarea rows="3 " cols="20 " style="resize:none; " class="form-control
+                                                " id="user_oldDisease2 " disabled></textarea>
+                                </td>
+                            </tr>
+                            <tr style="height: 200px; " align="center ">
+                                <td>体格检查:</td>
+                                <td colspan="9 ">
+                                    <textarea rows="3 " cols="20 " style="resize:none; " class="form-control
+                                                " id="user_bodyCheck2 " disabled></textarea>
+                                </td>
+                            </tr>
+                            <tr style="height: 200px; " align="center ">
+                                <td>辅助检查:</td>
+                                <td colspan="9 ">
+                                    <textarea rows="3 " cols="20 " style="resize:none; " class="form-control
+                                                " id="user_assistCheck2 " disabled></textarea>
+                                </td>
+                            </tr>
+                            <tr style=" height: 200px; " align="center ">
+                                <td>诊断:</td>
+                                <td colspan="9 ">
+                                    <textarea rows="3 " cols="20 " style="resize:none; " class="form-control
+                                                " id="user_diagnose2 " disabled></textarea>
+                                </td>
+                            </tr>
+                            <tr style=" height: 200px; " align="center ">
+                                <td>医嘱:</td>
+                                <td colspan="9 ">
+                                    <div class="text-left ">
+                                        <button class="btn btn-default ">检查申请单</button>
+                                        <button class="btn btn-default ">药物申请单</button>
+                                    </div>
+                                    <!-- <div class="panel panel-default " style="min-width: 200px; ">
+                                        <div class="panel-body ">
+                                            <div class="animated ">
+
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="panel panel-default ">
+                                        <div class="panel-body " style="overflow:auto ">
+                                            <!-- 检查申请项 -->
+                                            <!-- <div class="animated checkList " id="checkBox ">
+                                                    <div class="col-lg-12 text-right " style="padding: 20px
+                                                0 ">
+                                                        <div class="btn btn-default " onclick="interrogatio_addOneCheck() ">增加一项</div>
+                                                    </div>
+                                                    <table class="table table-bordered table-striped table-hover ">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>检查项目</th>
+                                                                <th>检查方法</th>
+                                                                <th>检查部位</th>
+                                                                <th>检查科室</th>
+                                                                <th>价格</th>
+                                                                <th>状态</th>
+                                                                <th>操作</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="checkList ">
+                                                        </tbody>
+                                                    </table>
+                                                </div> -->
+                                            <!-- 药物清单 -->
+                                            <div class="animated medicineList " id="medicineBox1 " style="display:
+                                                block;overflow:auto ">
+                                                <table class="table table-bordered table-striped table-hover
+                                                text-center " id="medicineTable1 " disabled>
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-md-1 ">药嘱名称</th>
+                                                            <th class="col-md-1 " style="max-width: 80px; ">单次剂量</th>
+                                                            <th class="col-md-1 " style="min-width: 80px; ">剂量单位</th>
+                                                            <th class="col-md-1 " style="max-width: 80px; ">频次</th>
+                                                            <th class="col-md-1 ">用法</th>
+                                                            <th class="col-md-1 " style="max-width: 80px; ">疗程</th>
+                                                            <th class="col-md-1 " style="max-width: 80px; ">单价</th>
+                                                            <th class="col-md-1 " style="max-width: 80px; ">数量</th>
+                                                            <th class="col-md-1 " style="min-width: 80px; ">数量单位</th>
+                                                            <th class="col-md-1 " style="max-width: 80px; ">可用天数</th>
+                                                            <th class="col-md-1 " style="max-width: 80px; ">开始日期</th>
+                                                            <!-- <th class="col-md-1 ">操作</th> -->
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="medicineList1 ">
+                                                    </tbody>
+                                                </table>
+                                                <div class="price text-right " style="padding-right:20px ">
+                                                    总价：￥
+                                                    <span id="medicinePrice1 " style="font-size:20px;color:
+                                                green;font-weight: bold ">0</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style=" height: 200px; " align="center ">
+                                <td>检查结果:</td>
+                                <td colspan="9 ">
+                                    <textarea rows="3 " cols="20 " style="resize:none; " class="form-control
+                                                " id="user_checkResult2 " disabled></textarea>
+                                </td>
+                            </tr>
+                            <tr style=" height: 200px; " align="center ">
+                                <td>批注:</td>
+                                <td colspan="9 ">
+                                    <textarea rows="3 " cols="20 " style="resize:none; " class="form-control
+                                                " id="user_comment2 "></textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="submit text-right ">
+                            <div class="btn btn-success " onclick=" ">提交</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+<script src="js/jq.form.js "></script>
+
+
+<script src="js/imgUpload.js "></script>
+
+<script>
+    var api = {
+        url: "http://192.168.0.116:8080"
+    }
+
+    // 界面切换
+    var interrogation_one = document.getElementById('interrogation_one')
+    var interrogation_two = document.getElementById('interrogation_two')
+    var interrogation_three = document.getElementById('interrogation_three')
+    //回到第一个界面
+    function interrogationToOne() {
+        interrogation_one.style.display = 'block'
+        interrogation_two.style.display = 'none'
+        interrogation_three.style.display = 'none'
+    }
+    //新增门诊
+    function interrogationToTwo() {
+        interrogation_one.style.display = 'none'
+        interrogation_two.style.display = 'block'
+        interrogation_three.style.display = 'none'
+    }
+    //查看门诊病单
+    function interrogationToThree(personId, name, age, sex, officeName, caseId) {
+        interrogation_one.style.display = 'none'
+        interrogation_two.style.display = 'none'
+        interrogation_three.style.display = 'block'
+        $.ajax({
+            url: api.url + '/case/one/' + personId,
+            type: "get",
+            dataType: 'json',
+            data: {},
+            success: function (res) {
+                var obj = res.list;
+                console.log(obj)
+                if (res.code == 200) {
+                    $('#user_start2').val('初诊'); //初诊
+                    $('#user_department2').val(officeName); //科室
+                    $('#user_name2').val(name); //姓名
+                    $('#user_sex2').val(sex); //性别
+                    $('#user_age2').val(age); //年龄
+                    $('#user_told2').val(obj.symptom); //主诉
+                    $('#user_nowDisease2').val(obj.illnessNow); //现病史
+                    $('#user_oldDisease2').val(obj.illnessBefore); //既往史
+                    $('#user_bodyCheck2').val('体格检查'); //体格检查
+                    $('#user_assistCheck2').val('辅助检查'); //辅助检查
+                    $('#user_diagnose2').val(obj.diagnose); //诊断
+                    $('#user_checkResult2').val('检查结果'); //检查结果
+                    $('#user_comment2').val('批注'); //批注
+                } else {
+                    alert('发生的错误啊')
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+        //根据caseId获取药品列表
+        caseMedicine(caseId);
+    }
+    //案例的药单
+    function caseMedicine(caseId) {
+
+        // this.tableList = ["name", "quantity", "quantityUnit", "time", "function", "treatment", "price", "num", "unit", "treatment", "createTime"]
+
+        $.ajax({
+            url: api.url + '/medicine/case/1',
+            type: "get",
+            dataType: 'json',
+            data: {
+                // caseId: caseId
+            },
+            success: function (res) {
+                var arr = res.list;
+                var checkList = "";
+                var price = 0;
+                arr.forEach(function (element) {
+                    price += element.num * element.price;
+                    checkList += '<tr>' +
+                        '<td>' + element.name + '</td>' +
+                        '<td>' + element.quantity + '</td>' +
+                        '<td>' + element.quantityUnit + '</td>' +
+                        '<td>' + element.time + '</td>' +
+                        '<td>' + element.function+'</td>' +
+                        '<td>' + element.treatment + '</td>' +
+                        '<td>' + element.price + '</td>' +
+                        '<td>' + element.num + '</td>' +
+                        '<td>' + element.unit + '</td>' +
+                        '<td>' + element.treatment + '</td>' +
+                        '<td>' + element.createTime + '</td>' +
+                        '</tr>';
+                })
+                $('#medicineList1').append(checkList);
+                $('#medicinePrice1').append(price);
+
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    }
+
+    //网页加载完毕后,生成看病列表
+    $(document).ready(function () {
+        function getAllCase() {
+            $.ajax({
+                url: api.url + '/hospital/case/1',
+                type: "get",
+                dataType: 'json',
+                data: {},
+                success: function (res) {
+                    var arr = res.list;
+                    var html = "";
+                    arr.forEach(function (element) {
+                        var statusText = "";
+                        var status = element.state;
+                        switch (status) {
+                            case 0:
+                                statusText = "诊断中";
+                                break;
+                            case 1:
+                                statusText = "未支付";
+                                break;
+                            case 2:
+                                statusText = "已支付";
+                                break;
+                        }
+                        html +=
+                            `
+                        <tr>
+                            <td>${element.person.id}</td>
+                            <td>${element.person.name}</td>
+                            <td>${element.person.nation}</td>
+                            <td>${element.person.place}</td>
+                            <td>${element.person.phone}</td>
+                            <td>${element.person.idCard}</td>
+                            <td>${statusText}</td>
+                            <td>
+                                <div class="btn btn-default perInfo" data-name="${element.person.name}" data-id="${element.person.id}"
+                                 data-age="22" data-sex="${element.person.sex}" data-officeName="${element.caseDetail.officeName}" data-caseId="${1}">详情</div>
+                            </td>
+                        </tr>
+                    `
+                    });
+                    $("#allPer").append(html);
+                    $("#allPer").on("click", ".perInfo", function () {
+                        var that = $(this);
+                        var personId = that.attr('data-id');
+                        var name = that.attr('data-name');
+                        var age = that.attr('data-age');
+                        var sex = that.attr('data-sex');
+                        var officeName = that.attr('data-officeName');
+                        var caseId = that.attr('data-caseId');
+                        console.log(officeName)
+                        interrogationToThree(personId, name, age, sex, officeName, caseId)
+                    });
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+
+        getAllCase();
+    });
+
+    // 医嘱/药嘱切换
+    function changToCheck() {
+        var checkBox = $('#checkBox');
+        var medicineBox = $('#medicineBox');
+        checkBox.css('display', 'block')
+        medicineBox.css('display', 'none')
+    }
+
+    function changToMedicine() {
+        var checkBox = $('#checkBox');
+        var medicineBox = $('#medicineBox');
+        checkBox.css('display', 'none')
+        medicineBox.css('display', 'block')
+    }
+
+    // 添加一项检查项
+    function interrogatio_addOneCheck() {
+        var checkList = '<tr>' +
+            '<td><input type="text"></td>' +
+            '<td><input type="text"></td>' +
+            '<td><input type="text"></td>' +
+            '<td><input type="text"></td>' +
+            '<td><input type="text"></td>' +
+            '<td><input type="text"></td>' +
+            '<td><div class="btn btn-default interrogatio_reduceOneCheck" class="">删除</div></td>' +
+            '</tr>';
+        $('#checkList').append(checkList);
+    }
+
+    // 添加点击事件
+    $("#checkList").on("click", ".interrogatio_reduceOneCheck", function () {
+        $(this).parent().parent().remove();
+    });
+
+    // 添加一项药品
+    function interrogatio_addOneMedicine() {
+        var checkList = '<tr>' +
+            '<td><input type="text" class="form-control"></td>' +
+            '<td><input type="text" class="form-control" style="max-width: 80px;"></td>' +
+            '<td>' +
+            '<select class="col-md-2 form-control" name="" id="">' +
+            '<option value="滴">滴</option>' +
+            '<option value="mg">mg</option>' +
+            '<option value="ml">ml</option>' +
+            '</select>' +
+            '</td>' +
+            '<td><input type="text" class="form-control" style="max-width: 80px;"></td>' +
+            '<td><input type="text"  class="form-control" ></td>' +
+            '<td><input type="text" class="form-control" style="max-width: 80px;"></td>' +
+            '<td><input type="Number" class="form-control" style="max-width: 80px;"></td>' +
+            '<td><input type="Number" class="form-control" style="max-width: 80px;" onchange="price(\'medicineTable\',\'medicinePrice\')"></td>' +
+            '<td>' +
+            '<select class="col-md-2 form-control" name="" id="">' +
+            '<option value="次">次</option>' +
+            '<option value="支">支</option>' +
+            '<option value="盒">盒</option>' +
+            '<option value="瓶">瓶</option>' +
+            '<option value="袋">袋</option>' +
+            '</select>' +
+            '</td>' +
+            '<td><input type="text" class="form-control" style="max-width: 80px;"></td>' +
+            '<td><input type="text" class="form-control" style="max-width: 80px;"></td>' +
+            '</tr>';
+        $('#medicineList').append(checkList);
+    }
+
+    // 添加点击事件
+    $("#medicineList").on("click", ".interrogatio_reduceOneMedicineList", function () {
+        $(this).parent().parent().remove();
+    });
+
+    // 药嘱对象
+    function Medicine(id) {
+        this.medicineList = [];
+        this.tableList = ["name", "quantity", "quantityUnit", "time", "function", "treatment", "price", "num", "unit",
+            "treatment", "createTime"
+        ]
+        this.mytable = document.getElementById(id);
+        this.medicineArr = function () {
+            var mytable = this.mytable;
+            for (var i = 1, rows = mytable.rows.length; i < rows; i++) {
+                var data = {};
+                for (var j = 0, cells = mytable.rows[i].cells.length; j < cells; j++) {
+                    var that = mytable.rows[i].cells[j].childNodes;
+                    data[this.tableList[j]] = that[0].value;
+                }
+                this.medicineList.push(data)
+            }
+            return this.medicineList
+        }
+        this.medicinePrice = function () {
+            var list = this.medicineArr();
+            var price = 0;
+            list.forEach(function (element) {
+                price += (element['num'] ? element['num'] / 1 : 0) * (element['price'] ? element['price'] / 1 : 0)
+            })
+            return price;
+        }
+    }
+
+    // 获取药品列表
+    function medicineList() {
+        var medicineTable = new Medicine("medicineTable");
+        return medicineTable.medicineArr()
+    }
+
+    // 获取药品价格
+    function price(tableId, priceId) {
+        var medicinePrice = new Medicine(tableId);
+        $('#' + priceId).text(medicinePrice.medicinePrice());
+    }
+
+    //   更新拿药数据
+    function addMedicineList(caseId) {
+        //获取药品列表
+        var medicineListArr = medicineList();
+        var data = {};
+        medicineListArr.forEach(function (elelment, index) {
+            data["medicines[" + index + "].name"] = elelment.name;
+            data["medicines[" + index + "].num"] = elelment.num;
+            data["medicines[" + index + "].unit"] = elelment.unit; //数量单位
+            data["medicines[" + index + "].time"] = elelment.time; //频次
+            data["medicines[" + index + "].function"] = elelment.function; //方法
+            data["medicines[" + index + "].treatment"] = elelment.treatment; //疗程
+            data["medicines[" + index + "].price"] = elelment.price; //单价
+            data["medicines[" + index + "].quantity"] = elelment.quantity; //单次剂量
+            data["medicines[" + index + "].quantityUnit"] = elelment.quantityUnit; //剂量单位
+            data["medicines[" + index + "].caseId"] = caseId;
+        });
+        // console.log(data)
+        //上传药品列表
+        $.ajax({
+            url: api.url + '/medicine/add',
+            type: "post",
+            dataType: 'json',
+            data: data,
+            success: function (res) {
+                // console.log(res)
+                if (res.code == 200) {
+                    $("#medicineList").empty()
+                    alert('上传药单成功');
+                } else {
+                    alert('发生的错误啊')
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+
+    }
+
+    //  提交问诊内容
+    function submitAskContent(that) {
+        $('that').attr('disabled', 'disabled')
+        var user_start = $('#user_start').val(); //初诊
+        var user_department = $('#user_department').val(); //科室
+        var user_name = $('#user_name').val(); //姓名
+        var user_sex = $('#user_sex').val(); //性别
+        var user_age = $('#user_age').val(); //年龄
+        var user_told = $('#user_told').val(); //主诉
+        var user_nowDisease = $('#user_nowDisease').val(); //现病史
+        var user_oldDisease = $('#user_oldDisease').val(); //既往史
+        var user_bodyCheck = $('#user_bodyCheck').val(); //体格检查
+        var user_assistCheck = $('#user_assistCheck').val(); //辅助检查
+        var user_diagnose = $('#user_diagnose').val(); //诊断
+        var user_checkResult = $('#user_checkResult').val(); //检查结果
+        var user_comment = $('#user_comment').val(); //批注
+        var data = {
+            "person.name": user_name, //
+            //   "person.name": '', //
+            //   "person.sex": user_sex, //
+            "person.sex": 1, //
+            "person.nation": "汉", //
+            //   "person.birthday": "2000-12-12", //
+            "person.place": "河南省人民医院", //
+            "person.phone": "15511111111", //
+            "person.idCard": "130626200012121234", //
+            "person.allergy": "花粉", //过敏
+            //   "person.createTime": "2018-4-16", //
+            //   "tCase.id": 1,
+            //   "tCase.personId": 1,
+            "tCase.doctorId": "1", //
+            "tCase.symptom": "身体起疙瘩", //症状
+            //   "tCase.healthCheckup": user_bodyCheck, //体格检查
+            //   "tCase.diagnose": user_diagnose ? user_diagnose : "感冒了", //诊断
+            //   "tCase.illnessNow": user_nowDisease, //现病史
+            //   "tCase.illnessBefore": user_oldDisease, //往病史
+            "tCase.healthCheckup": "体格检查", //体格检查
+            "tCase.diagnose": "花粉过敏", //诊断
+            "tCase.illnessNow": "现病史", //现病史
+            "tCase.illnessBefore": "往病史", //往病史
+            "tCase.prescrip": "托儿敏", //药方
+            //   "tCase.prescripValue": 1000.05, //药方价格
+            //   "tCase.isCheckProject": 0, //是否检查
+            //   "tCase.payValue": 200, //实际支付金额
+            //   "tCase.discountValue": 1, //优惠的价格
+            //   "tCase.payType": 0, //
+            //   "tCase.payWay": 0, //
+            "tCase.state": 1, //
+            //   "tCase.createTime": 1, //
+        }
+        $.ajax({
+            url: api.url + '/case/person/case',
+            type: "post",
+            dataType: 'json',
+            data: data,
+            success: function (res) {
+                if (res.code == 200) {
+                    console.log(res)
+                    addMedicineList(res.list)
+                    alert('提交成功')
+                } else {
+                    alert('发生的错误啊')
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+
+
+    // 影像中心
+    $(document).ready(function () {
+        $.ajax({
+            url: api.url + '/check/getCheckListByUserIdAndTypeId',
+            type: "post",
+            dataType: 'json',
+            data: {
+                userId: 1,
+                hospId: 1,
+                typeId: 1
+            },
+            success: function (res) {
+                if (res.code == 200) {
+                    console.log(res.list);
+                    var arr = res.list;
+                    var str = "";
+                    arr.forEach(function (element) {
+                        str +=
+                            `
+                        <tr>
+                            <td>${element.personId}</td>
+                            <td>${element.name}</td>
+                            <td>${element.sex}</td>
+                            <td>${element.age}</td>
+                            <td>${element.diagnose}</td>
+                            <td>${element.createTime}</td>
+                            <td>${element.checkName}</td>
+                            <td>${element.checkMethod}</td>
+                            <td>${element.checkPart}</td>
+                            <td>${element.checkHospId}</td>
+                            <td>${element.payValue}</td>
+                            <td>${element.state}</td>
+                            <td>
+                                <div onclick="uploadImg()" class="btn btn-default">上传</div>
+                            </td>
+                        </tr>
+                    `
+                    })
+                    $('#mrctTable').append(str)
+                } else {
+                    alert('发生的错误啊')
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+
+    })
+</script>
+
+</html>

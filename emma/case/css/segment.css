@@ -1,0 +1,269 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+sub,
+sup,
+tt,
+var,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video,
+button {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    utline: none;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    list-style: none;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: ' ';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+body {
+    font: 13px/1.5 Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Noto Sans CJK SC, WenQuanYi Micro Hei, Arial, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+input {
+    outline: 0;
+    -webkit-appearance: none;
+}
+
+img {
+    vertical-align: bottom;
+}
+
+*:focus {
+    outline: none;
+}
+
+.hidden {
+    float: left;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.hiddenText {
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.none {
+    display: none;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.center {
+    text-align: center;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+table {
+    margin-left: 1px;
+}
+
+table td,
+table th {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+    /* border:1px solid rgb(152, 199, 247); */
+    /* border:1px solid rgb(110, 178, 235); */
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+input {
+    border: none;
+    outline: medium;
+}
+
+.big_table {
+    width: 960px;
+    margin: 0 auto;
+    margin-top: 4rem;
+    -moz-box-shadow: 5px 7px 5px #c1c1c1;
+    box-shadow: 5px 7px 5px #c1c1c1;
+}
+
+.select {
+    padding: 0.6rem 2.3rem;
+    border-radius: 4px;
+    margin-left: 0.3rem;
+}
+
+.couple {
+    margin-left: 0.8rem;
+}
+
+.double_couple {
+    margin-left: 2rem;
+}
+
+.btn_result {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.theme_two {
+    line-height: 34px;
+}
+
+.selectform-control {
+    border-radius: 4px;
+    padding: 0.6rem 3.2rem;
+    margin-left: 0.3rem;
+}
+
+/* 1100分辨率（大于960px，小于1199px） */
+
+@media screen and (min-width: 0px) and (max-width: 1199px) {
+    .selectform-control {
+        border-radius: 4px;
+        padding: 0.6rem 6.4rem;
+        margin-left: 0.15rem;
+    }
+}

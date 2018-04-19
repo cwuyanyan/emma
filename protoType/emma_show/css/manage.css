@@ -1,0 +1,23 @@
+/* 管理层样式 */
+.big_box{
+    width:100%;
+    float:left;
+   
+}
+.big_box .big_left_box{
+    width: 20%;
+    float: left;
+    
+}
+
+.big_box .big_left_box  .themeMsg{
+    padding:1rem;
+    text-align: left;
+    margin-left:15%;
+}
+
+.big_box .big_right_box{
+    width: 80%;
+    height: 100%;
+    float: right;
+}

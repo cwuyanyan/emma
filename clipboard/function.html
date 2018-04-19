@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        <button class="btn">Copy_target</button>
+        <div>hello</div>
+
+        <script src="https://cdn.bootcss.com/clipboard.js/1.6.1/clipboard.js"></script>
+        <script>
+                var clipboard = new Clipboard('.btn', {
+                // 通过target指定要复印的节点
+                    target: function() {
+                               return document.querySelector('div');
+                          }
+                });
+            
+                clipboard.on('success', function(e) {
+                    console.log(e);
+                });
+            
+                clipboard.on('error', function(e) {
+                    console.log(e);
+                });
+                </script>
+</body>
+</html>

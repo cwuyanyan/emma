@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- data-clipboard-target指向复印节点，这里指input的目标id 
+data-clipboard-action这里使用copy，同时也可以使用cut，
+则点击按钮后，内容里的值被剪切。如果没有指定，则默认值是copy。
+cut只能在input和textare中起作用 -->
+    <input id="foo" type="text" value="hello">
+    <button class="btn" data-clipboard-action="copy" data-clipboard-target="#foo">Copy</button>
+
+    <textarea id="bar">hello</textarea>
+    <button class="btn" data-clipboard-action="cut" data-clipboard-target="#bar">Cut</button>
+
+    <div>hello_div</div>
+    <button class="btn" data-clipboard-action="copy" data-clipboard-target="div">Copy</button>
+
+    <script src="https://cdn.bootcss.com/clipboard.js/1.6.1/clipboard.js"></script>
+    <script>
+        // button的class的值
+        var clipboard = new Clipboard('.btn');
+        clipboard.on('success', function (e) {
+            console.log(e);
+        });
+
+        clipboard.on('error', function (e) {
+            console.log(e);
+        });
+    </script>
+</body>
+
+</html>

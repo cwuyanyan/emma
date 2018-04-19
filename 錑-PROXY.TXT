@@ -1,0 +1,20 @@
+解决方案
+
+偶然发现webpack-dev-server可以实现代理请求（把指定的url规则转发到其他地址），所以就试了一下。由于项目使用了Angular-cli构建，并没有webpack配置文件，悲伤。于是又去google上搜索了一圈Angular-cli，找到了Angular-cli实现代理的解决方案。
+
+在项目目录下创建文件proxy.conf.json：
+
+{
+   "/api": {
+      "target": "http://www.kuaidi100.com",
+      "secure": false,
+      "changeOrigin": true,
+      "pathRewrite": {"^/api" : ""}
+   }
+}
+
+    /api为代理规则，因为我接口都是以api开头的，大家可以根据自己的实际情况设置
+    target为目标服务地址，比如一个get请求的地址为http://localhost:4200/api/cards/all会被代理为http://localhost:3000/api/cards/all
+    secure为是否开启ssl验证，在这里设置为false
+
+接下来只需要启动node服务，再使用ng serve --proxy-config proxy.conf.json来启动自己的Angular项目就可以完美实现代理了，简直不要太好用，以前的方法简直是蠢爆了！
